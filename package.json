@@ -4,11 +4,15 @@
   "description": "Social network for unknowns",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "social"
   ],
   "author": "droidx",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
