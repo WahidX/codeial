@@ -7,7 +7,8 @@ router.get('/profile', userController.profile);
 router.get('/login', userController.login);
 router.get('/signup', userController.signup);
 router.post('/create-user', userController.createUser);
-router.post('/login-user', );
+router.post('/create-session', userController.createSession);
+router.get('/delete-session', userController.deleteSession);
 
 
 

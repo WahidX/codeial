@@ -1,9 +1,30 @@
 const User = require('../models/users');
 
-
 module.exports = {
     profile : function(req, res) {
-        return res.end('<h1>Profile accessed</h1>');
+        console.log(req.cookies);
+        if (req.cookies.user_id){
+            User.findById(req.cookies.user_id, function(err, user){
+                if(err){console.log('Error in finding user from userID'); return}
+
+                if(user){
+                    return res.render('profile',{
+                        title: 'Profile',
+                        user:{
+                            name: user.name,
+                            email: user.email
+                        }
+                    });
+                }
+                else{
+                    console.log('Faulty Cookie');
+                    return
+                }
+            })
+        }
+        else{
+            return res.redirect('/user/login');
+        }
     },
 
     login : function(req, res) {
@@ -45,6 +66,39 @@ module.exports = {
                 return res.redirect('back');
             }
         })
+    },
 
+    createSession : function(req, res) {
+
+        User.findOne({email: req.body.email}, function(err, user) {
+            if(err) {
+                console.log('Error in finding user');
+                return;
+            }
+
+            if (user) {
+                if(user.password == req.body.password){
+                    res.cookie('user_id', user.id);
+                    return res.redirect('/user/profile');
+                }
+                else {
+                    console.log('Password incorrect');
+                    return res.redirect('back');
+                }
+            }
+            else {
+                console.log('No user found');
+                return res.redirect('/user/signup');
+            }
+        })
+    },
+
+    deleteSession: function(req, res) {
+        if(req.cookies.user_id){
+            res.cookie();
+            //Delete cookie not working
+            console.log('jjjjj',res.cookies);
+        }
+        res.redirect('/user/profile');
     }
 };
