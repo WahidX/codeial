@@ -12,6 +12,8 @@ app.use(expressEjsLayouts);
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
+// Decode post reqs
+app.use(express.urlencoded());
 
 // Router
 app.use('/', require('./routes'));
@@ -19,6 +21,7 @@ app.use('/', require('./routes'));
 // View Engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
 
 
 app.listen(port, function(err) {

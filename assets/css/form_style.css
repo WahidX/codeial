@@ -1,0 +1,13 @@
+form{
+    width: 500px;
+    padding: 30px;
+    background-color: aqua;
+    border-radius: 10px;
+    text-align: left;
+    color: rgba(0,0,0,.7);;
+}
+
+
+form label:hover{
+    color: rgba(0,0,0,1);
+}
