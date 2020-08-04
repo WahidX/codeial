@@ -3,10 +3,16 @@ const User = require('../models/users');
 
 module.exports = {
     profile : function(req, res) {
-        return res.end('<h1>Profile accessed</h1>');
+        return res.render('profile',{
+            title: 'Profile'
+        })
     },
 
     login : function(req, res) {
+        if(req.isAuthenticated()){
+            return res.redirect('/user/profile/');
+        }
+
         return res.render('login', {
             title : 'Login'
         });
@@ -14,6 +20,10 @@ module.exports = {
     },
 
     signup : function(req, res) {
+        if(req.isAuthenticated()){
+            return res.redirect('/user/profile/');
+        }
+
         return res.render('signup', {
             title : 'Signup'
         });
@@ -42,9 +52,18 @@ module.exports = {
             }
             else{
                 console.log('Email alreay exists');
-                return res.redirect('back');
+                return res.redirect('/user/login');
             }
         })
 
+    },
+
+    createSession : function(req, res) {
+        return res.redirect('/');
+    },
+
+    destroySession: function(req, res) {
+        req.logout();
+        return res.redirect('/');
     }
 };
