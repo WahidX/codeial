@@ -1,13 +1,5 @@
+* {
+  font-family: 'Noto Sans JP', sans-serif; }
+
 body {
-    background-color: thistle;
-    border: 2px solid red;
-}
-
-header{
-    background-color: aquamarine;
-}
-
-
-footer{
-    background-color: aquamarine;
-}
+  background-color: thistle; }

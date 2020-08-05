@@ -1,17 +1,15 @@
 <header>
-    XSpace 
-    <br>
-    Page = <%= title %>
+    <link rel="stylesheet" href="/css/header.css">
 
-    <ul>
-        <% if(locals.user){ %>
-            <li> <%= user.name %> </li>
-            <li> <a href="/user/sign-out">Sign Out</a> </li>
-        <% }else{ %>
-            <li> <a href="/user/login">Sign in</a> </li>
-            <li> <a href="/user/signup">Sign up</a> </li>
-        <% } %>
-    </ul>
+    <h1>XSpace</h1>
+    
 
-
+    <% if(locals.user){ %>
+        <p> <%= user.name %> </p>
+        <p class="h-btn"> <a href="/user/sign-out">Sign Out</a> </p>
+    <% } else { %>
+        <p class="h-btn"> <a href="/user/login">Sign in</a> </p>
+        <p class="h-btn"> <a href="/user/signup">Sign up</a> </p>
+    <% } %>
+        
 </header>

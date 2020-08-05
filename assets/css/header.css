@@ -1,0 +1,20 @@
+header {
+  width: 100%;
+  height: 100px;
+  background-color: #5fb4fd; }
+  header h1 {
+    margin-left: 30px;
+    display: inline-block; }
+  header p {
+    display: inline-block;
+    padding: 20px;
+    height: 100%; }
+    header p a {
+      padding: 5px;
+      text-decoration: none; }
+    header p a:hover {
+      background-color: #34a0ff;
+      border-radius: 10px;
+      transition: 0.2s; }
+  header .h-btn {
+    float: right; }
