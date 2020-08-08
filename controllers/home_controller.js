@@ -1,4 +1,5 @@
-
+const Post = require("../models/post");
+const User = require("../models/users");
 
 
 module.exports = {
@@ -7,7 +8,7 @@ module.exports = {
             title : "Home"
         });
     }
-
+    
     
 
 };
