@@ -1,11 +1,12 @@
 const Post = require("../models/post");
 const User = require("../models/users");
+const Comment = require("../models/comment");
 
 
 module.exports = {
-    home : function(req, res) {
+    createComment : function(req, res) {
         
-        Post.find({}).populate('user').exec(function(err, posts){
+        Comment.find({}).populate('user').populate('comment').exec(function(err, comments){
             if(err){
                 console.log('Err in getting all the posts',err);
             }

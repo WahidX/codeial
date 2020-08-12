@@ -1,0 +1,11 @@
+#post-container {
+  width: 100%; }
+  #post-container .post-item {
+    background-color: #82bcff;
+    border: 2px solid lightcoral;
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    border-radius: 5px; }
+  #post-container .post-item:hover {
+    background-color: #62aafd; }

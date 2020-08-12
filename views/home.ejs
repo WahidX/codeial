@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/home.css">
 
 <h1>Inside of <%= title %></h1>
 
@@ -8,12 +9,19 @@
     <input type="submit" value="POST">
 </form>
 
+<h2>Post Feeds</h2>
 <div id="post-container">
     
-    for i in posts[]:
+    <% for(post of posts){ %>
         <div class="post-item">
-            post.content
-            post.username
+            <%= post.user.name %>
+            <br>
+            <small> <%= post.content %> </small>
+        </div>
+        <div class="comment-container">
+            for comment in comments:
+                comment
         </div>
 
+    <% } %>
 </div>
