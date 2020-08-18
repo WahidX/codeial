@@ -3,11 +3,12 @@
 
 <h1>Inside of <%= title %></h1>
 
-
-<form action="/post/create" method="POST" name='new-post-form'>
-    <textarea name="content" cols="50" rows="3"></textarea>
-    <input type="submit" value="POST">
-</form>
+<% if(locals.user){ %>
+    <form action="/post/create" method="POST" name='new-post-form'>
+        <textarea name="content" cols="50" rows="3"></textarea>
+        <input type="submit" value="POST">
+    </form>
+<% } %>
 
 <h2>Post Feeds</h2>
 <div id="post-container">
@@ -18,7 +19,26 @@
             <br>
             <small> <%= post.content %> </small>
         </div>
+        
         <div class="comment-container">
+            <% if(locals.user){ %>
+                <form action="/comment/create" method="POST" name="new-comment-form">
+                    <input type="text" name="content" placeholder="Enter your comment here" required>
+                    <input type="hidden" name="post" value="<%= post._id %>">
+                    <input type="submit" value="Add comment">
+                </form>
+            <% } %>
+            
+            <div class="post-comment">
+                <% for(comment of post.comments){ %>
+                    <div class="comment-item">
+                        <%= comment.user.name %>
+                        <br>
+                        <small> <%= comment.content %> </small>
+                    </div>
+                <% } %>
+
+            </div>
             for comment in comments:
                 comment
         </div>

@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const passport = require('../config/passport-local-strategy');
 
-const postController = require('../controllers/post_controller');
+const commentController = require('../controllers/comment_controller');
 
-router.post('/create',passport.checkAuthentication,postController.createPost);
+router.post('/create',passport.checkAuthentication,commentController.create);
 
 
 

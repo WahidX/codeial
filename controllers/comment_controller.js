@@ -4,22 +4,26 @@ const Comment = require("../models/comment");
 
 
 module.exports = {
-    createComment : function(req, res) {
-        
-        Comment.find({}).populate('user').populate('comment').exec(function(err, comments){
-            if(err){
-                console.log('Err in getting all the posts',err);
+    create : function(req, res) {
+        Post.findById(req.body.post, function(err, post){
+            if(err){console.log("err in finding post for commenting",err); return;}
+
+            if(post){
+                Comment.create({
+                    content: req.body.content,
+                    user: req.user._id,
+                    post: req.body.post
+                }, function(err, comment){
+                    if(err){console.log('err in creating comment',err); return;}
+
+                    post.comments.push(comment);
+                    post.save();
+
+                    return res.redirect('/');
+                });
             }
-
-            return res.render('home', {
-                title: "Home",
-                posts: posts
-            });
         });
-
     }
+}
     
     
-
-};
-
