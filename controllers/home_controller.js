@@ -1,6 +1,5 @@
 const Post = require("../models/post");
-const User = require("../models/users");
-
+const Comment = require("../models/comment");
 
 module.exports = {
     home : function(req, res) {
@@ -8,7 +7,7 @@ module.exports = {
         Post.find({})
         .populate('user')
         .populate({
-            path: 'comment',
+            path: 'comments',
             populate: {
                 path: 'user'
             }
@@ -23,8 +22,9 @@ module.exports = {
                 posts: posts
             });
         });
-
     }
+
+    
     
     
 

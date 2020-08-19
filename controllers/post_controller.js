@@ -1,6 +1,6 @@
 const Post = require("../models/post");
 const User = require("../models/users");
-
+const Comment = require("../models/comment");
 
 module.exports = {
     createPost : function(req, res){
@@ -19,6 +19,20 @@ module.exports = {
             }
 
             return res.redirect('back');
+        });
+    },
+
+    destroy: function(req, res){
+        Post.findById(req.params.id, function(err, post){
+            if(err){console.log("err in finding post by ID", err); return;}
+
+            if(post && post.user == req.user.id){
+                post.remove();
+            
+                Comment.deleteMany({post: req.params.id}, function(err){
+                    return res.redirect("back");
+                });
+            }
         });
     }
 

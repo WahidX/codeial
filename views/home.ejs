@@ -18,6 +18,11 @@
             <%= post.user.name %>
             <br>
             <small> <%= post.content %> </small>
+
+            <% if(locals.user && locals.user.id == post.user.id) { %>
+                <a href="post/destroy/<%= post.id %>">Delete</a>
+            <% } %>
+
         </div>
         
         <div class="comment-container">

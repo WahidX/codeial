@@ -45,14 +45,14 @@ module.exports = {
                     password: req.body.password,
                     name: req.body.name
                 }, function(err,newUser){
-                    if(err){console.log("Error in creating new user");return}
+                    if(err){console.log("Error in creating new user");return;}
                     console.log('New user created');
-                    return res.redirect('back');
+                    return res.redirect('/user/login');
                 })
             }
             else{
                 console.log('Email alreay exists');
-                return res.redirect('/user/login');
+                return res.redirect('back');
             }
         })
 
