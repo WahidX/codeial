@@ -4,8 +4,8 @@ const passport = require('../config/passport-local-strategy');
 
 const commentController = require('../controllers/comment_controller');
 
-router.post('/create',passport.checkAuthentication,commentController.create);
-
+router.post('/create', passport.checkAuthentication, commentController.create);
+router.get('/destroy/:id', passport.checkAuthentication, commentController.destroy);
 
 
 module.exports = router;

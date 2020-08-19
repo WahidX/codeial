@@ -14,16 +14,8 @@
 <div id="post-container">
     
     <% for(post of posts){ %>
-        <div class="post-item">
-            <%= post.user.name %>
-            <br>
-            <small> <%= post.content %> </small>
-
-            <% if(locals.user && locals.user.id == post.user.id) { %>
-                <a href="post/destroy/<%= post.id %>">Delete</a>
-            <% } %>
-
-        </div>
+        
+        <%- include('_post') -%>
         
         <div class="comment-container">
             <% if(locals.user){ %>
@@ -36,17 +28,16 @@
             
             <div class="post-comment">
                 <% for(comment of post.comments){ %>
-                    <div class="comment-item">
-                        <%= comment.user.name %>
-                        <br>
-                        <small> <%= comment.content %> </small>
-                    </div>
+                    
+                    <%- include('_comment') -%>
+
                 <% } %>
 
             </div>
-            for comment in comments:
-                comment
+           
         </div>
 
     <% } %>
+
+    <br><br><br><br>
 </div>
