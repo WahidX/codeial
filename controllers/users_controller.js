@@ -3,9 +3,28 @@ const User = require('../models/users');
 
 module.exports = {
     profile : function(req, res) {
-        return res.render('profile',{
-            title: 'Profile'
+
+        User.findById(req.params.id, function(err, user){
+            if(err){console.log("err in finding user",err);return;}
+
+            return res.render('profile', {
+                title: 'Profile',
+                profile_user: user
+            })
         })
+    },
+
+    updateUser : function(req, res){
+        if(req.user.id == req.params.id){
+            User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+                if(err){console.log("err in finding user for update",err);return;}
+
+                return res.redirect('back');
+            })
+        }
+        else{
+            return res.status(401).send('Unauthourized');
+        }
     },
 
     login : function(req, res) {

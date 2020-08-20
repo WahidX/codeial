@@ -5,16 +5,14 @@
 
 <% if(locals.user){ %>
     <form action="/post/create" method="POST" name='new-post-form'>
-        <textarea name="content" cols="50" rows="3"></textarea>
+        <textarea name="content" cols="50" rows="3" required></textarea>
         <input type="submit" value="POST">
     </form>
 <% } %>
 
 <h2>Post Feeds</h2>
 <div id="post-container">
-    
     <% for(post of posts){ %>
-        
         <%- include('_post') -%>
         
         <div class="comment-container">
@@ -26,18 +24,20 @@
                 </form>
             <% } %>
             
-            <div class="post-comment">
-                <% for(comment of post.comments){ %>
-                    
-                    <%- include('_comment') -%>
-
-                <% } %>
-
-            </div>
-           
+            <% for(comment of post.comments){ %>
+                <%- include('_comment') -%>
+            <% } %>            
         </div>
 
     <% } %>
 
-    <br><br><br><br>
+    <br><br>
+</div>
+
+<div id="friends-container">
+
+    <% for(u of all_users){ %>
+        <p class="friend-item"><a href="/user/profile/<%= u.id %>"><%= u.name %></a></p>
+    <% } %>
+
 </div>

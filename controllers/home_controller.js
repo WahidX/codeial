@@ -1,5 +1,5 @@
 const Post = require("../models/post");
-const Comment = require("../models/comment");
+const User = require("../models/users");
 
 module.exports = {
     home : function(req, res) {
@@ -13,13 +13,16 @@ module.exports = {
             }
         })
         .exec(function(err, posts){
-            if(err){
-                console.log('Err in getting all the posts',err);
-            }
+            if(err){console.log('Err in getting all the posts',err);return;}
 
-            return res.render('home', {
-                title: "Home",
-                posts: posts
+            User.find({}, function(err, users){
+                if(err){console.log('Err in getting all the posts',err);return;}
+
+                return res.render('home', {
+                    title: "Home",
+                    posts: posts,
+                    all_users: users
+                });                
             });
         });
     }

@@ -1,2 +1,10 @@
-<h1> Welcome <%= locals.user.name %> </h1>
-<p> EMAIL: <%= locals.user.email %> </p>
+<% if(profile_user.id == user.id){ %>
+    <form id="update-form" action="/user/user_update/<%= user.id %>" method="POST">
+        <input type="text" name="name" placeholder="Your name" value="<%= user.name %>">
+        <input type="text" name="email" placeholder="Your email" value="<%= user.email %>">
+        <input type="submit" value="Update">
+    </form>
+<% } else { %>
+    <h1> NAME: <%= profile_user.name %> </h1>
+    <p> EMAIL: <%= profile_user.email %> </p>
+<% } %>
