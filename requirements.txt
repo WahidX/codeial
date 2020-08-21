@@ -8,4 +8,4 @@ passport-local
 connect-mongo
 node-sass-middleware
 ejs
-
+connect-flash

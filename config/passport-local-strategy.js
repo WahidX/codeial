@@ -17,7 +17,6 @@ passport.use(new LocalStrategy({
                 console.log("Invalid username/password");
                 return done(null, false);
             }
-
             return done(null, user);
         });
     }

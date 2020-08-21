@@ -4,41 +4,42 @@ const Comment = require("../models/comment");
 
 
 module.exports = {
-    create : function(req, res) {
-        Post.findById(req.body.post, function(err, post){
-            if(err){console.log("err in finding post for commenting",err); return;}
-
+    create : async function(req, res) {
+        try{
+            let post = await Post.findById(req.body.post);
+            
             if(post){
-                Comment.create({
+                let comment = await Comment.create({
                     content: req.body.content,
                     user: req.user._id,
                     post: req.body.post
-                }, function(err, comment){
-                    if(err){console.log('err in creating comment',err); return;}
-
-                    post.comments.push(comment);
-                    post.save();
-
-                    return res.redirect('/');
                 });
+                post.comments.push(comment);
+                post.save();
+                return res.redirect('/');    
             }
-        });
+        } catch(err){
+            console.log("Err: ",err);
+        }
     },
 
-    destroy : function(req, res){
-        Comment.findById(req.params.id, function(err, comment){
+    destroy : async function(req, res){
+        try{
+            let comment = await Comment.findById(req.params.id);
+
             if(comment.user = req.user.id){
                 let postId = comment.post;
                 comment.remove();
 
-                Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id }}, function(err, post){
-                    return res.redirect('back');
-                })
+                let post = await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id }})
+                return res.redirect('back');
             }
             else{
                 res.redirect('back');
             }
-        })
+        } catch(err){
+            console.log("Err: ",err);
+        }
     }
 }
     

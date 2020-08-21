@@ -2,16 +2,17 @@ const User = require('../models/users');
 
 
 module.exports = {
-    profile : function(req, res) {
-
-        User.findById(req.params.id, function(err, user){
-            if(err){console.log("err in finding user",err);return;}
+    profile : async function(req, res) {
+        try{
+            let profile_user = await User.findById(req.params.id);
 
             return res.render('profile', {
                 title: 'Profile',
                 profile_user: user
-            })
-        })
+            });
+        }catch(err){
+            console.log('Err: ',err);
+        }
     },
 
     updateUser : function(req, res){
@@ -51,6 +52,7 @@ module.exports = {
     createUser : function(req, res) {
         
         if(req.body.password != req.body.confirm_password){
+            req.flash('error',"Password doesn't match!");
             console.log("password doesn't match");
             return res.redirect('back');
         }
@@ -78,11 +80,14 @@ module.exports = {
     },
 
     createSession : function(req, res) {
+        req.flash('success', 'Logged in');
+            
         return res.redirect('/');
     },
 
     destroySession: function(req, res) {
         req.logout();
+        req.flash('success', 'Logged out');
         return res.redirect('/');
     }
 };
