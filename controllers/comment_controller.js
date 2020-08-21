@@ -16,6 +16,7 @@ module.exports = {
                 });
                 post.comments.push(comment);
                 post.save();
+                req.flash('success', 'Comment posted successfully!');
                 return res.redirect('/');    
             }
         } catch(err){
@@ -31,10 +32,12 @@ module.exports = {
                 let postId = comment.post;
                 comment.remove();
 
-                let post = await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id }})
+                let post = await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id }});
+                req.flash('success', 'Comment deleted successfully!');
                 return res.redirect('back');
             }
             else{
+                req.flash('error', 'You cannot delete this comment!');
                 res.redirect('back');
             }
         } catch(err){

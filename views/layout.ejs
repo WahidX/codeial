@@ -2,20 +2,43 @@
     <head>
         
         <title><%= title %></title>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" ></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css">
         <%- style %>
     </head>
 
     <body>
         <%- include('_header') %>
-        <% if( flash.success && flash.success.length>0 ){ %>
-            <h5><%= flash.success %></h5>
-        <% } %>
+        
 
         <%- body %>
 
         <%- include('_footer') %>
         <%- script %>
+
+        <script>
+            <% if( flash.success && flash.success.length>0 ){ %>
+                new Noty({
+                    text: '<%= flash.success %>',
+                    theme: 'light',
+                    type: 'success',
+                    layout: 'topRight',
+                    timeout: 1500
+                }).show();
+            <% } %>
+            
+            <% if( flash.success && flash.error.length>0 ){ %>
+                new Noty({
+                    text: '<%= flash.error %>',
+                    theme: 'light',
+                    type: 'error',
+                    layout: 'topRight',
+                    timeout: 1500
+                }).show();
+            <% } %>
+
+        </script>
     </body>
 
 </html>

@@ -13,6 +13,7 @@ module.exports = {
                 content: req.body.content,
                 user: req.user._id
             });
+            req.flash('success', 'Posted created successfully!');
             return res.redirect('back');    
 
         } catch(err) {
@@ -29,7 +30,11 @@ module.exports = {
                 post.remove();
         
                 await Comment.deleteMany({post: req.params.id});
+                req.flash('success', 'Post deleted successfully!');
                 return res.redirect('back');
+            }
+            else{
+                req.flash('error', 'You cannot delete this post!');
             }
         } catch(err) {
             console.log('Err: ',err);
