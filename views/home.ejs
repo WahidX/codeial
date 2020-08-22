@@ -4,7 +4,7 @@
 <h1>Inside of <%= title %></h1>
 
 <% if(locals.user){ %>
-    <form action="/post/create" method="POST" name='new-post-form'>
+    <form action="/post/create" method="POST" id='new-post-form'>
         <textarea name="content" cols="50" rows="3" required></textarea>
         <input type="submit" value="POST">
     </form>
@@ -14,21 +14,6 @@
 <div id="post-container">
     <% for(post of posts){ %>
         <%- include('_post') -%>
-        
-        <div class="comment-container">
-            <% if(locals.user){ %>
-                <form action="/comment/create" method="POST" name="new-comment-form">
-                    <input type="text" name="content" placeholder="Enter your comment here" required>
-                    <input type="hidden" name="post" value="<%= post._id %>">
-                    <input type="submit" value="Add comment">
-                </form>
-            <% } %>
-            
-            <% for(comment of post.comments){ %>
-                <%- include('_comment') -%>
-            <% } %>            
-        </div>
-
     <% } %>
 
     <br><br>
@@ -41,3 +26,5 @@
     <% } %>
 
 </div>
+
+<script src="/js/home_posts.js"></script>
