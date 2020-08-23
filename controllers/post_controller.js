@@ -40,6 +40,17 @@ module.exports = {
                 post.remove();
         
                 await Comment.deleteMany({post: req.params.id});
+
+                if(req.xhr){
+                    console.log('xhr Gotten');
+                    return res.status(200).json({
+                        data: {
+                            post_id: req.params.id
+                        },
+                        message: 'Post deleted successfully'
+                    })
+                }
+
                 req.flash('success', 'Post deleted successfully!');
                 return res.redirect('back');
             }

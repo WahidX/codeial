@@ -13,6 +13,7 @@
                     let newDomItem = newPostDom(data.data.post);
                     $('#post-container').prepend(newDomItem);
                     deletePost($('.post-delete', newDomItem));
+                    console.log('after');
                 },
                 error: function(err){
                     console.log(err.responseText);
@@ -24,12 +25,12 @@
     // function to generate DOM for new post
     let newPostDom = function(post){
         return (`
-        <div id="${ post._id }" class="post-item">
+        <div id="post-${ post._id }" class="post-item">
             ${ post.user.name }
             <br>
             <small> ${ post.content } </small>
 
-            <a class="post-delete" href="post/destroy/${ post._id }">Delete</a>
+            <a class="post-delete" href="post/destroy/${post._id}">Delete</a>
             
             <div class="comment-container">
                 <form action="/comment/create" method="POST" name="new-comment-form">
@@ -46,20 +47,26 @@
 
 
     let deletePost = function(deleteLink){
-        $(deleteLink).click(function(e){
+        console.log($(deleteLink).prop('href'));
+        console.log(deleteLink);
+        
+        // deteteLink was not working
+        $(".post-delete").click(function(e){
+            
+            console.log("clicked");
             e.preventDefault();
-
+        
             $.ajax({
                 type: 'get',
                 url: $(deleteLink).prop('href'),
                 success: function(data){
-                    $(`#post-${data.post._id}`).remove();
+                    $(`#post-${data.data.post_id}`).remove();
                 },
                 error: function(err){
-                    console.log('Err: ',err);
+                    console.log(err.responseText);
                 }
-            })
-        })
+            });
+        });
     }
 
 
