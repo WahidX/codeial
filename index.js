@@ -23,6 +23,9 @@ app.use(sassMiddleware({
 // Assets
 app.use(express.static('./assets'));
 
+// Upload path will be available 
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
 // Layout1s
 app.use(expressEjsLayouts);
 app.set('layout extractStyles', true);

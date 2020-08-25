@@ -1,7 +1,10 @@
+<!-- Checking if logged in user is same as the profile user -->
+<img src="<%= user.avatar %>" alt="<%= user.name %>" width="100" height="100">
 <% if(profile_user.id == user.id){ %>
-    <form id="update-form" action="/user/user_update/<%= user.id %>" method="POST">
+    <form id="update-form" action="/user/user_update/<%= user.id %>" enctype="multipart/form-data" method="POST">
         <input type="text" name="name" placeholder="Your name" value="<%= user.name %>">
         <input type="text" name="email" placeholder="Your email" value="<%= user.email %>">
+        <input type="file" name="avatar" placeholder="Profile picture">
         <input type="submit" value="Update">
     </form>
 <% } else { %>

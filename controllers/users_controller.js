@@ -1,29 +1,51 @@
 const User = require('../models/users');
+const fs = require('fs');
+const path = require('path');
 
 
 module.exports = {
-    profile : async function(req, res) {
-        try{
-            let profile_user = await User.findById(req.params.id);
+    profile : function(req, res) {
+        
+        User.findById(req.params.id, function(err, user){
+            if(err){console.log('Err: ',err);return;}
 
             return res.render('profile', {
                 title: 'Profile',
                 profile_user: user
             });
-        }catch(err){
-            console.log('Err: ',err);
-        }
+        })
     },
 
-    updateUser : function(req, res){
+    updateUser : async function(req, res){
         if(req.user.id == req.params.id){
-            User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
-                if(err){console.log("err in finding user for update",err);return;}
+            try{
+                let user = await User.findById(req.params.id);
+                User.uploadedAvatar(req, res, function(err){
+                    if(err){console.log("Err: ",err);return;}
+                    
+                    user.email = req.body.email;
+                    user.name = req.body.name;
 
-                return res.redirect('back');
-            })
+                    if(req.file){
+                        if(user.avatar){
+                            fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                        }
+
+                        user.avatar = User.avatarPath + '/' + req.file.filename;
+                    }
+                    user.save();
+                    return res.redirect('back');
+                });
+                
+
+            }catch(err) {
+                console.log('Err: ',err);
+                return;
+            }
+            
         }
         else{
+            req.flash('error', 'Unauthorized');
             return res.status(401).send('Unauthourized');
         }
     },
