@@ -8,6 +8,7 @@ router.get('/', homeController.home);
 router.use('/user', require('./users'));
 router.use('/post', require('./post'));
 router.use('/comment', require('./comment'));
+router.use('/api', require('./api'));
 
 console.log('router loaded');
 
