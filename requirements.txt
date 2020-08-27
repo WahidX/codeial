@@ -9,3 +9,6 @@ connect-mongo
 node-sass-middleware
 ejs
 connect-flash
+noty
+multer
+passport-jwt
