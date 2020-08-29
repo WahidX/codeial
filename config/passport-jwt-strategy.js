@@ -4,3 +4,4 @@ const ExtractJWT = require("passport-jwt").ExtractJwt;
 
 const User = require('../models/users');
 
+// Pending
