@@ -2,4 +2,9 @@
   font-family: 'Noto Sans JP', sans-serif; }
 
 body {
-  background-color: thistle; }
+  background-color: thistle;
+  width: 100%; }
+  body #body-container {
+    position: relative;
+    top: 120px;
+    width: 100%; }
