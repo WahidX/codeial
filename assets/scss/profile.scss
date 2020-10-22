@@ -1,0 +1,26 @@
+#profile-container{
+    position: relative;
+    width: 100%;
+    top: 130px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    img{
+        display: block;
+        border-radius: 5px;
+    }
+
+    form{
+        display: block;
+        
+        input{
+            margin: 15px;
+        }
+
+        button{
+            margin: 20px;
+        }
+    }
+}

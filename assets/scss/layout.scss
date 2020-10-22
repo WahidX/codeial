@@ -1,14 +1,22 @@
 *{
     font-family: 'Noto Sans JP', sans-serif;
-}
+    
 
-body {
-    background-color: thistle;
-    width: 100%;
-    #body-container{
-        position: relative;
-        top: 120px;
+    body {
+        position: absolute;
+        background-color: rgb(159, 212, 255);
         width: 100%;
+        top: 0px;
+        margin: auto;
 
+
+        #body-container{
+            position: relative;
+            top: 120px;
+            width: 90%;
+            padding-left: 50px;
+
+        }
     }
+
 }

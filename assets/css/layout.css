@@ -1,10 +1,13 @@
 * {
   font-family: 'Noto Sans JP', sans-serif; }
-
-body {
-  background-color: thistle;
-  width: 100%; }
-  body #body-container {
-    position: relative;
-    top: 120px;
-    width: 100%; }
+  * body {
+    position: absolute;
+    background-color: #9fd4ff;
+    width: 100%;
+    top: 0px;
+    margin: auto; }
+    * body #body-container {
+      position: relative;
+      top: 120px;
+      width: 90%;
+      padding-left: 50px; }

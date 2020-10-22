@@ -1,3 +1,14 @@
+form{
+    textarea{
+        border-radius: 15px;
+        width: 100%;
+        display: block;
+        margin: 0px 0px 30px 0px;
+        padding: 10px;
+        background-color: rgb(245, 223, 223);
+    }
+}
+
 #post-container{
     width: 100%;
 
@@ -7,11 +18,41 @@
         width: 100%;
         margin: auto;
         padding: 10px;
-        border-radius: 5px;
+        border-radius: 10px;
+        margin: 10px;
+
+        small{
+            padding: 15px;
+        }
+
+        .comment-container{
+            padding: 10px;
+        }
     }
 
     .post-item:hover{
         background-color: rgb(98, 170, 253);
+        box-shadow: 0px 0px 5px 0px rgb(243, 79, 79);
+        transition-duration: 300ms;
     }
     
+}
+
+#friends-container{
+    border: 2px solid lightcoral;
+    border-radius: 10px;
+    width: 200px;
+    padding: 15px;
+
+    .friend-item{
+        a{
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        a:hover{
+            border-left: 6px solid lightcoral;
+            transition-duration: 300ms;
+        }
+    }
 }

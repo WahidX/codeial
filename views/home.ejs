@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/home.css">
 
-<h1>Inside of <%= title %></h1>
+<h1>Add New Post</h1>
 
 <% if(locals.user){ %>
     <form action="/post/create" method="POST" id='new-post-form'>
-        <textarea name="content" cols="50" rows="3" required></textarea>
+        <textarea name="content" cols="50" rows="3" placeholder="How you doin?" required></textarea>
         <input type="submit" value="POST">
     </form>
 <% } %>
@@ -20,7 +20,7 @@
 </div>
 
 <div id="friends-container">
-
+    <h2>Users:</h2>
     <% for(u of all_users){ %>
         <p class="friend-item"><a href="/user/profile/<%= u.id %>"><%= u.name %></a></p>
     <% } %>

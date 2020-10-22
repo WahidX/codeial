@@ -1,9 +1,10 @@
 footer{
-    margin-top: 100px;
-    bottom: 0px;
+    position: relative;
+    top: 200px;
     width: 100%;
     display: flex;
-    background-color: rgb(95, 180, 253);
+    background-color: cornflowerblue;
+    box-shadow: 0px 0px 15px 0px #00417e;
 
     p{
         margin: auto;

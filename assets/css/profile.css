@@ -1,0 +1,17 @@
+#profile-container {
+  position: relative;
+  width: 100%;
+  top: 130px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly; }
+  #profile-container img {
+    display: block;
+    border-radius: 5px; }
+  #profile-container form {
+    display: block; }
+    #profile-container form input {
+      margin: 15px; }
+    #profile-container form button {
+      margin: 20px; }
