@@ -22,7 +22,6 @@ module.exports = {
                 
                 comment = await comment.populate('user','name email').execPopulate();
 
-                console.log('Email:         ::',comment.user.email);
                 let job = queue.create('emails', comment).save(function(err){
                     if(err){console.log("Err: ",err);return;}
 
