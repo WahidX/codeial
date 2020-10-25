@@ -14,6 +14,11 @@ router.post('/create-session', passport.authenticate(
     {failureRedirect: '/user/login'}
 ), userController.createSession);
 router.get('/sign-out', userController.destroySession);
+// These are for reset and changing password
+router.get('/confirm-password', passport.checkAuthentication, userController.confirmPassword);
+router.post('/reset-password', userController.resetPassword);
+router.post('/check-token', userController.checkToken);
+
 
 router.get('/auth/google', passport.authenticate('google', {scope : ['profile', 'email']}));
 router.get('/auth/google/callback',passport.authenticate('google', {failureRedirect: '/user/login'}), userController.createSession);

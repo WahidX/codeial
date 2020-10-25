@@ -1,6 +1,11 @@
 const User = require('../models/users');
 const fs = require('fs');
 const path = require('path');
+const passport = require('passport');
+const crypto = require('crypto');
+const Reset_Token = require('../models/reset_token');
+const queue = require("../config/kue");
+const resetCodeMailWorker = require("../workers/resetToken_mail_worker");
 
 
 module.exports = {
@@ -111,5 +116,67 @@ module.exports = {
         req.logout();
         req.flash('success', 'Logged out');
         return res.redirect('/');
+    },
+
+    // These are for reset and changing password
+    // reset password comes here
+    confirmPassword: function(req, res){
+        return res.render('confirm-password', {
+            title: 'Confirm Password'
+        });
+    },
+
+    // gets the password or mail
+    resetPassword: async function(req, res){
+        // Grabbing the user
+        let user;
+        if(req.isAuthenticated()){
+            // its a reset request
+            user = req.user;
+            if (user.password !== req.body.old_password){
+                req.flash('error', 'Wrong password');
+                return res.redirect('back');
+            }
+        }
+        else{
+            // its a forget password request
+            user = await User.findOne({email: req.body.email});
+            if(!user){
+                req.flash('error', 'Email is not registered');
+                return res.redirect('back');
+            }
+        }
+        // Generating the token and storing it in DB
+        const token = crypto.randomBytes(20).toString('hex').slice(0,4);
+        // Deleting user's previous tokens
+        Reset_Token.deleteOne({ user: user._id }, function (err) {
+            if(err){ console.log("Err: ",err); return; }
+        });
+        // creating new token entry
+        let resetToken = await Reset_Token.create({
+            user: user.id,
+            access_token: token,
+            isvalid: true
+        });
+        
+        resetToken = await resetToken.populate('user','name email').execPopulate();
+
+        let job = queue.create('resetmails', resetToken).save(function(err){
+            if(err){console.log("Err: ",err);return;}
+        });
+        // Mail sent and DB updated
+        
+        // TODO: Store user for forget password
+
+        return res.render('reset-code',{
+            title: 'Reset Code'
+        });
+    },
+    
+    checkToken: async function (req, res) {
+        
+
+        return res.redirect('back');
     }
+
 };
