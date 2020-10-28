@@ -1,9 +1,9 @@
 <div class="container">
     
     <h2>Hi <%= resetToken.user.name %>,</h2>
-
     <h3>Your token for changing your password:</h3>
-    <h2> <%= resetToken.access_token %> </h2>
+    <% var params = resetToken.user._id+"/"+resetToken.access_token %>
+    <h2> <a href="http://localhost:8000/user/reset-link/<%= params %>">Update Password</a></h2>
     <br><br>
     <h2>Thanks,<br> postman(codial)</h2>
 

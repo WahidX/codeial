@@ -5,6 +5,6 @@ const Comment = require('../models/comment');
 queue.process('emails', function(job, done){
 
     commentMailer.newComment(job.data);
-    
+     
     done();
 });

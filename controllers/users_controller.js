@@ -120,63 +120,76 @@ module.exports = {
 
     // These are for reset and changing password
     // reset password comes here
-    confirmPassword: function(req, res){
-        return res.render('confirm-password', {
+
+    forgetPassword: function(req, res){
+        return res.render('confirm_email', {
+            title: 'Confirm Email'
+        });
+    },
+
+    checkPassword: function(req, res){
+        if (req.user.password !== req.body.old_password){
+            req.flash('error', 'Incorrect password!');
+            return res.redirect('back');
+        }
+
+        return res.redirect(`/user/send-reset-link/${req.user.id}`);
+    },
+
+    resetPassword: function(req, res){
+        return res.render('confirm_password', {
             title: 'Confirm Password'
         });
     },
 
-    // gets the password or mail
-    resetPassword: async function(req, res){
-        // Grabbing the user
-        let user;
-        if(req.isAuthenticated()){
-            // its a reset request
-            user = req.user;
-            if (user.password !== req.body.old_password){
-                req.flash('error', 'Wrong password');
-                return res.redirect('back');
-            }
+    checkEmail: async function(req, res){
+        let user = await User.findOne({email:req.body.email});
+
+        if(!user){
+            req.flash('error', 'Email not registered!');
+            return res.redirect('back');
         }
-        else{
-            // its a forget password request
-            user = await User.findOne({email: req.body.email});
-            if(!user){
-                req.flash('error', 'Email is not registered');
-                return res.redirect('back');
-            }
+        
+        return res.redirect(`/user/send-reset-link/${user.id}`);
+    },
+
+    sendResetLink: async function(req, res){
+        // check user id
+        let user = await User.findById(req.params.id);
+        if(!user){
+            req.flash('error', 'Invalid URL!');
+            return res.redirect('back');
         }
-        // Generating the token and storing it in DB
-        const token = crypto.randomBytes(20).toString('hex').slice(0,4);
-        // Deleting user's previous tokens
-        Reset_Token.deleteOne({ user: user._id }, function (err) {
-            if(err){ console.log("Err: ",err); return; }
-        });
-        // creating new token entry
+
+        // invalidating user's previous valid tokens
+        Reset_Token.updateMany(
+            {user: user._id, isvalid: "true"}, 
+            {$set: { isvalid: "false" }}, 
+            function(err){ console.log("Err: ",err); return; }
+        );
+
+        // Generating new token and storing it in DB
+        const token = crypto.randomBytes(20).toString('hex');
+
         let resetToken = await Reset_Token.create({
             user: user.id,
             access_token: token,
             isvalid: true
         });
         
-        resetToken = await resetToken.populate('user','name email').execPopulate();
+
+        resetToken = await resetToken.populate('user','_id name email').execPopulate();
 
         let job = queue.create('resetmails', resetToken).save(function(err){
             if(err){console.log("Err: ",err);return;}
         });
         // Mail sent and DB updated
-        
-        // TODO: Store user for forget password
+        req.flash('success', 'Reset link sent to mail');
 
-        return res.render('reset-code',{
-            title: 'Reset Code'
-        });
-    },
-    
-    checkToken: async function (req, res) {
-        
-
+        // TODO: in EJS resend mail option
         return res.redirect('back');
     }
 
+// From mail update password  
+ 
 };
