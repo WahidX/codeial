@@ -25,7 +25,8 @@ router.post('/check-email', userController.checkEmail);
 router.get('/send-reset-link/:id', userController.sendResetLink);
 
 // From Mail
-// router.get('/reset-link/:id/:token')
+router.get('/reset-link/:id/:token',userController.resetLinkCheck);
+router.post('/update-password/:id', userController.updatePassword);
 
 router.get('/auth/google', passport.authenticate('google', {scope : ['profile', 'email']}));
 router.get('/auth/google/callback',passport.authenticate('google', {failureRedirect: '/user/login'}), userController.createSession);

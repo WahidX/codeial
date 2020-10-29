@@ -188,8 +188,62 @@ module.exports = {
 
         // TODO: in EJS resend mail option
         return res.redirect('back');
-    }
+    },
 
-// From mail update password  
+    resetLinkCheck: async function(req, res){
+
+        let user = await User.findById(req.params.id);
+        if (!user){
+            req.flash('error','Invalid Request');
+            return res.redirect('/');
+        }
+        let token = await Reset_Token.findOne({user:user.id, isvalid:'true'}, {}, { sort: { 'created_at' : -1 } });
+
+        console.log("Token: ",token);
+        if (token.access_token !== req.params.token){
+            req.flash('error', 'Invalid Request');
+            return res.redirect('/');
+        }
+
+        req.flash('success', 'Now Change Password');
+
+        return res.render('update-password',{
+            title: 'New Password',
+            id: user._id
+        });
+    },
+
+    updatePassword: async function(req, res){
+        let user = await User.findById(req.params.id);
+        if (!user){
+            req.flash('error', 'Invalid request');
+            return res.redirect('back');
+        }
+
+        if (req.body.new_password !== req.body.confirm_password){
+            req.flash('error', 'Passwords didn\'t match');
+            return res.redirect('back');
+        }
+
+        // Check if the user made the update request
+        let token = await Reset_Token.findOne({user: req.params.id, isvalid: true});
+        if (!token){
+            console.log('No reset_token is valid for ID ',req.params.id);
+            req.flash('error','Invalid request');
+        }
+        
+        token.isvalid = 'false';
+        token.save();
+
+        user.password = req.body.new_password;
+        user.save();
+
+        req.flash('success', 'Password changed Successfully');
+        if (req.isAuthenticated()){
+            req.logout();
+        }
+        return res.redirect('/user/login');
+
+    } 
  
 };
