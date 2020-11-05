@@ -1,0 +1,2 @@
+1. Have to create: ajax handling in home_comment.js
+2. Issue with the comments' user name in home

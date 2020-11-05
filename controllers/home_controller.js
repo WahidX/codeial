@@ -12,8 +12,11 @@ module.exports = {
                 path: 'comments',
                 populate: {
                     path: 'user'
+                },  // Next populate giving error
+                populate: {
+                    path: 'likes'
                 }
-            });
+            }).populate('likes');
             
             let users = await User.find({});
 

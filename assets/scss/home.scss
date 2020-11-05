@@ -10,7 +10,7 @@ form{
 }
 
 #post-container{
-    width: 100%;
+    width: 80%;
 
     .post-item{
         background-color: rgb(130, 188, 255);
@@ -21,12 +21,52 @@ form{
         border-radius: 10px;
         margin: 10px;
 
-        small{
-            padding: 15px;
+        .post-content{
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 5px;
+            
+            small{
+                padding: 15px;
+            }    
+        }
+
+        .item-buttons{
+            width: 300px;
+            padding: 5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+
+            div *{
+                padding-right: 20px;
+            }
         }
 
         .comment-container{
             padding: 10px;
+
+            .comment-item{
+                padding: 3px;
+
+                .comment-content{
+                    border: 1px solid black;
+                    border-radius: 10px;
+                    padding: 5px;
+                }
+
+                .item-buttons{
+                    width: 300px;
+                    padding: 5px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: start;
+
+                    div *{
+                        padding-right: 20px;
+                    }
+                }
+            }
         }
     }
 

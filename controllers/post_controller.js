@@ -1,6 +1,7 @@
 const Post = require("../models/post");
 const User = require("../models/users");
 const Comment = require("../models/comment");
+const Like = require("../models/like");
 
 module.exports = {
     createPost : async function(req, res){
@@ -15,11 +16,14 @@ module.exports = {
             });
 
             if(req.xhr){
+                // Only the user name we need n not the password, email 
+                post = await post.populate('user', 'name').execPopulate();
+
                 return res.status(200).json({
                     data: {
                         post: post
                     },
-                    message: 'Post created successfully!!!'
+                    message: 'Post created!'
                 })
             }
 
@@ -27,6 +31,7 @@ module.exports = {
             return res.redirect('back');    
 
         } catch(err) {
+            req.flash('error', 'err');
             console.log('Err in create func: ',err);
             return;
         }
@@ -37,6 +42,10 @@ module.exports = {
             let post = await Post.findById(req.params.id);
 
             if(post && post.user == req.user.id){
+                // Delete likes associated with the post and its comments
+                await Like.deleteMany({likeable: post, onModel: 'Post'});
+                await Like.deleteMany({_id: { $in: post.comments}});
+
                 post.remove();
         
                 await Comment.deleteMany({post: req.params.id});

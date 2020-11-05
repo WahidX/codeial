@@ -1,12 +1,29 @@
-<div id="<%= post._id %>" class="post-item">
-    <%= post.user.name %>
-    <br>
-    <small> <%= post.content %> </small>
-
-    <% if(locals.user && locals.user.id == post.user.id) { %>
-        <a class="post-delete" href="post/destroy/<%= post.id %>">Delete</a>
-    <% } %>
-
+<div id="post-<%= post._id %>" class="post-item">
+    <div class="post-content">
+        <%= post.user.name %>
+        <br>
+        <small> <%= post.content %> </small>
+        <br>
+        <div class='item-buttons'>
+            
+            <% if(locals.user){ %>
+                <div class="item-like">
+                    <a href='/likes/toggle/?id=<%= post._id %>&type=Post' data-likes="<%= post.likes.length %>">
+                        <%= post.likes.length %> Likes
+                    </a>
+                </div>
+            <% }else{ %>
+                <div class="item-like">
+                        <%= post.likes.length %> Likes
+                </div>
+            <% } %>
+            <% if(locals.user && locals.user.id == post.user.id) { %>
+                <a class="item-delete" href="post/destroy/<%= post.id %>">Delete</a>
+            <% } %>
+        
+        </div>
+    </div>
+    
     <div class="comment-container">
         <% if(locals.user){ %>
             <form action="/comment/create" method="POST" name="new-comment-form">

@@ -29,9 +29,19 @@
             ${ post.user.name }
             <br>
             <small> ${ post.content } </small>
-
-            <a class="post-delete" href="post/destroy/${post._id}">Delete</a>
+            <br>
+            <div class='item-buttons'>
             
+                <div class="item-like">
+                    <a href='/likes/toggle/?id=${post._id}&type=Post' data-likes="post.likes.length">
+                        0 Likes
+                    </a>
+                </div>
+
+                <a class="post-delete" href="post/destroy/${post._id}">Delete</a>
+            
+            </div>
+
             <div class="comment-container">
                 <form action="/comment/create" method="POST" name="new-comment-form">
                     <input type="text" name="content" placeholder="Enter your comment here" required>
