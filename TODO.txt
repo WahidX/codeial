@@ -1,2 +1,2 @@
-1. Have to create: ajax handling in home_comment.js
+1. Have to create: ajax handling in home_comment.js >>>> create done, delete remaining for both post and comments
 2. Issue with the comments' user name in home

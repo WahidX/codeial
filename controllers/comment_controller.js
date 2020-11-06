@@ -20,23 +20,23 @@ module.exports = {
                 post.comments.push(comment);
                 post.save();
 
-                // if(req.xhr){
-                //     // Only the user name we need n not the password, email 
-                //     post = await post
-                //         .populate({ path: 'user', select: 'name' })
-                //         .populate({ path: 'comments', select: 'user' })
-                //         .execPopulate();
+                if(req.xhr){
+                    // Only the user name we need n not the password, email 
+                    comment = await comment
+                        .populate({ path: 'user', select: 'name' })
+                        .populate({ path: 'comments', select: 'user' })
+                        .execPopulate();
                         
                                         
-                //     return res.status(200).json({
-                //         data: {
-                //             post: post
-                //         },
-                //         message: 'Post created!'
-                //     })
-                // }
+                    return res.status(200).json({
+                        data: {
+                            comment: comment
+                        },
+                        message: 'Comment created!'
+                    })
+                }
 
-                comment = await comment.populate('user','name email').execPopulate();
+                // comment = await comment.populate('user','name email').execPopulate();
                 
                 req.flash('success', 'Comment posted successfully!');
                 
@@ -73,7 +73,7 @@ module.exports = {
                         data: {
                             comment_id: req.params.id
                         },
-                        message: 'Post deleted'
+                        message: 'Comment deleted'
                     });
                 }
                 

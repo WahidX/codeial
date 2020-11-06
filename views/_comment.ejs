@@ -18,9 +18,11 @@
                 </div>
             <% } %>
             
-            <% if(locals.user && (locals.user.id == comment.user.id || locals.user.id == post.user.id)) { %>
-                <a href="comment/destroy/<%= comment.id %>">Delete</a>
-            <% } %>        
+            <% if(locals.user && locals.user.id == comment.user.id ) { %>
+                <a href="comment/destroy/<%= comment._id %>">Delete</a>
+            <% } %>
+            
+            
         </div>
     </div>
 </div>

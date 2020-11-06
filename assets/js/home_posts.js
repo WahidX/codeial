@@ -13,7 +13,6 @@
                     let newDomItem = newPostDom(data.data.post);
                     $('#post-container').prepend(newDomItem);
                     deletePost($('.post-delete', newDomItem));
-                    console.log('after');
                 },
                 error: function(err){
                     console.log(err.responseText);

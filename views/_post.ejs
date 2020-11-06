@@ -24,14 +24,15 @@
         </div>
     </div>
     
-    <div class="comment-container">
-        <% if(locals.user){ %>
-            <form action="/comment/create" method="POST" name="new-comment-form">
-                <input type="text" name="content" placeholder="Enter your comment here" required>
-                <input type="hidden" name="post" value="<%= post._id %>">
-                <input type="submit" value="Add comment">
-            </form>
-        <% } %>
+    <% if(locals.user){ %>
+        <form action="/comment/create" method="POST" id="new-comment-form">
+            <input type="text" name="content" placeholder="Enter your comment here" required>
+            <input type="hidden" name="post" value="<%= post._id %>">
+            <input type="submit" value="Add comment">
+        </form>
+    <% } %>
+
+    <div id="comment-container">
         
         <% for(comment of post.comments){ %>
             <%- include('_comment') -%>

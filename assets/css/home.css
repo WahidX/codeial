@@ -30,21 +30,21 @@ form textarea {
       justify-content: start; }
       #post-container .post-item .item-buttons div * {
         padding-right: 20px; }
-    #post-container .post-item .comment-container {
+    #post-container .post-item #comment-container {
       padding: 10px; }
-      #post-container .post-item .comment-container .comment-item {
+      #post-container .post-item #comment-container .comment-item {
         padding: 3px; }
-        #post-container .post-item .comment-container .comment-item .comment-content {
+        #post-container .post-item #comment-container .comment-item .comment-content {
           border: 1px solid black;
           border-radius: 10px;
           padding: 5px; }
-        #post-container .post-item .comment-container .comment-item .item-buttons {
+        #post-container .post-item #comment-container .comment-item .item-buttons {
           width: 300px;
           padding: 5px;
           display: flex;
           flex-direction: row;
           justify-content: start; }
-          #post-container .post-item .comment-container .comment-item .item-buttons div * {
+          #post-container .post-item #comment-container .comment-item .item-buttons div * {
             padding-right: 20px; }
   #post-container .post-item:hover {
     background-color: #62aafd;
