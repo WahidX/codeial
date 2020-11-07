@@ -62,7 +62,7 @@
                 type: 'get',
                 url: $(deleteLink).prop('href'),
                 success: function(data){
-                    $(`#post-${data.data.comment_id}`).remove();
+                    $(`#comment-${data.data.comment_id}`).remove();
                 },
                 error: function(err){
                     console.log(err.responseText);

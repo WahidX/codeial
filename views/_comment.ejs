@@ -1,4 +1,4 @@
-<div class="comment-item">
+<div id="comment-<%= comment._id %>" class="comment-item">
     <div class="comment-content">
         <%= comment.user.name %>
         <br>
@@ -19,7 +19,7 @@
             <% } %>
             
             <% if(locals.user && locals.user.id == comment.user.id ) { %>
-                <a href="comment/destroy/<%= comment._id %>">Delete</a>
+                <a class="comment-delete" href="comment/destroy/<%= comment._id %>">Delete</a>
             <% } %>
             
             

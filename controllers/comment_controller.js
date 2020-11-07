@@ -20,13 +20,12 @@ module.exports = {
                 post.comments.push(comment);
                 post.save();
 
+                // Only the user name we need n not the password, email 
+                comment = await comment.populate('user', 'name email').execPopulate();
+
+                req.flash('success', 'Comment posted successfully!');
+
                 if(req.xhr){
-                    // Only the user name we need n not the password, email 
-                    comment = await comment
-                        .populate({ path: 'user', select: 'name' })
-                        .populate({ path: 'comments', select: 'user' })
-                        .execPopulate();
-                        
                                         
                     return res.status(200).json({
                         data: {
@@ -36,12 +35,7 @@ module.exports = {
                     })
                 }
 
-                // comment = await comment.populate('user','name email').execPopulate();
                 
-                req.flash('success', 'Comment posted successfully!');
-                
-
-
                 // Mail notification
                 // let job = queue.create('emails', comment).save(function(err){
                 //     if(err){console.log("Err: ",err);return;}

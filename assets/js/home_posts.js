@@ -59,7 +59,7 @@
         console.log($(deleteLink).prop('href'));
         console.log(deleteLink);
         
-        // deteteLink was not working
+        
         $(".post-delete").click(function(e){
             
             console.log("clicked");
@@ -78,7 +78,5 @@
         });
     }
 
-
     createPost();
-
 }
