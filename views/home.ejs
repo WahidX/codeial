@@ -1,29 +1,40 @@
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/home.css">
 
-<h1>Add New Post</h1>
+<div id="home-body">
 
-<% if(locals.user){ %>
-    <form action="/post/create" method="POST" id='new-post-form'>
-        <textarea name="content" cols="50" rows="3" placeholder="How you doin?" required></textarea>
-        <input type="submit" value="POST">
-    </form>
-<% } %>
+    <h1>Add New Post</h1>
 
-<h2>Post Feeds</h2>
-<div id="post-container">
-    <% for(post of posts){ %>
-        <%- include('_post') -%>
+    <% if(locals.user){ %>
+        <form action="/post/create" method="POST" id='new-post-form'>
+            <textarea name="content" cols="50" rows="3" placeholder="How you doin?" required></textarea>
+            <input type="submit" value="POST">
+        </form>
     <% } %>
 
-    <br><br><br>
+    <h2>Post Feeds</h2>
+    <div id="post-container">
+        <% for(post of posts){ %>
+            <%- include('_post') -%>
+        <% } %>
+
+        <br><br><br>
+    </div>
+
 </div>
 
-<div id="friends-container">
-    <h2>Users:</h2>
-    <% for(u of all_users){ %>
-        <p class="friend-item"><a href="/user/profile/<%= u.id %>"><%= u.name %></a></p>
-    <% } %>
+<div id="sidebar-container">
+    
+    <div id="friends-container">
+        friends-container
+    </div>
+    <div id="all-users-container">
+        <h2>Users:</h2>
+        <% for(u of all_users){ %>
+            <p class="friend-item"><a href="/user/profile/<%= u.id %>"><%= u.name %></a></p>
+        <% } %>
+
+    </div>
 
 </div>
 
