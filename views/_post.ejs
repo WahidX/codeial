@@ -8,7 +8,7 @@
             
             <% if(locals.user){ %>
                 <div class="item-like">
-                    <a href='/likes/toggle/?id=<%= post._id %>&type=Post' data-likes="<%= post.likes.length %>">
+                    <a class="toggle-like-button" href='/likes/toggle/?id=<%= post._id %>&type=Post' data-likes="<%= post.likes.length %>">
                         <%= post.likes.length %> Likes
                     </a>
                 </div>

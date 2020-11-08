@@ -11,6 +11,18 @@
                 success: function(data){
                     console.log("To send: ", data.data);
                     let newDomItem = newCommentDom(data.data.comment);
+
+                    new ToggleLike($(' .toggle-like-button', newDomItem));
+
+                    new Noty({
+                        theme: 'relax',
+                        text: "Comment published!",
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1000
+                        
+                    }).show();
+
                     $('#comment-container').prepend(newDomItem);
                     deleteComment($('.comment-delete', newDomItem));
                 },
@@ -33,7 +45,7 @@
                     <div class='item-buttons'>
                         
                         <div class="item-like">
-                            <a href='/likes/toggle/?id=${ comment._id }&type=Comment' data-likes="${ comment.likes.length }">
+                            <a class="toggle-like-button" href='/likes/toggle/?id=${ comment._id }&type=Comment' data-likes="${ comment.likes.length }">
                                 0 Likes
                             </a>
                         </div>
@@ -75,3 +87,6 @@
     createComment();
 
 }
+
+
+

@@ -12,9 +12,9 @@ module.exports = {
             .populate('user')
             .populate({
                 path: 'comments',
-                populate: {
+                populate: {     // user not populating
                     path: 'user'
-                },  // Next populate giving error
+                },  
                 populate: {
                     path: 'likes'
                 }
@@ -22,7 +22,7 @@ module.exports = {
             
             let users = await User.find({});
 
-            console.log(posts[0]);
+            // console.log(posts[0]);
 
             return res.render('home', {
                 title: "Home",

@@ -9,8 +9,19 @@
                 url: '/post/create',
                 data: postForm.serialize(),
                 success: function(data){
-                    console.log(data.data);
+                    // console.log(data.data);
                     let newDomItem = newPostDom(data.data.post);
+
+                    new ToggleLike($(' .toggle-like-button', newDomItem));
+                    new Noty({
+                        theme: 'relax',
+                        text: "Comment published!",
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1000
+                        
+                    }).show();
+
                     $('#post-container').prepend(newDomItem);
                     deletePost($('.post-delete', newDomItem));
                 },
@@ -32,7 +43,7 @@
             <div class='item-buttons'>
             
                 <div class="item-like">
-                    <a href='/likes/toggle/?id=${post._id}&type=Post' data-likes="post.likes.length">
+                    <a class="toggle-like-button" href='/likes/toggle/?id=${post._id}&type=Post' data-likes="post.likes.length">
                         0 Likes
                     </a>
                 </div>
