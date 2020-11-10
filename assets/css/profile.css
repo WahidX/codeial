@@ -15,3 +15,14 @@
       margin: 15px; }
     #profile-container form button {
       margin: 20px; }
+  #profile-container #details #add-friend {
+    border-radius: 20px;
+    padding: 8px;
+    text-decoration: none;
+    font-size: 1.5rem; }
+  #profile-container #details #add-friend:hover {
+    border: black solid 1px; }
+  #profile-container #details .friend {
+    background-color: #b4b4b4; }
+  #profile-container #details .non-friend {
+    background-color: #378eff; }

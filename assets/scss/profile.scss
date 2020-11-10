@@ -23,4 +23,27 @@
             margin: 20px;
         }
     }
+
+    #details{
+
+        #add-friend{
+            border-radius: 20px;
+            padding: 8px;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        #add-friend:hover{
+            border: black solid 1px;
+        }
+
+        .friend{
+            background-color: rgb(180, 180, 180);
+        }
+
+        .non-friend{
+            background-color: rgb(55, 142, 255);
+        }
+    }
+    
 }

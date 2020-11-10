@@ -17,11 +17,12 @@
             <h1> NAME: <%= profile_user.name %> </h1>
             <p> EMAIL: <%= profile_user.email %> </p>
             <!-- Logic -->
-            <a class='add-friend' onclick="addRemove()" href="/friend/add-remove/?id1=<%= user.id %>&id2=<%= profile_user.id %>">Add friend</a>
+            <a id='add-friend' class='non-friend' href="/friend/add-remove/?id1=<%= user.id %>&id2=<%= profile_user.id %>">Add friend</a>
         </div>
 
     <% } %>
 </div>
 
 
-<script type="text/js" src="js/add_remove_friend.js"></script>
+
+<script type="text/javascript" src="/js/add_remove_friend.js"></script>
