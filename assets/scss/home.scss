@@ -78,13 +78,14 @@ form{
     
 }
 
-#friends-container{
+
+.user-list{
     border: 2px solid lightcoral;
     border-radius: 10px;
     width: 200px;
     padding: 15px;
 
-    .friend-item{
+    .user-item{
         a{
             padding: 5px;
             text-decoration: none;

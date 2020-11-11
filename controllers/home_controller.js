@@ -23,16 +23,19 @@ module.exports = {
             let users = await User.find({});
 
             // friends
-            let current_user = await User.findById(req.user.id).populate({
-                path: 'friends',
-                populate: {
-                    path: 'user'
-                }
-            })
+            let friends;
+            if (req.user){
+                let current_user = await User.findById(req.user.id).populate({
+                    path: 'friends',
+                    populate: {
+                        path: 'user'
+                    }
+                })
+                friends = current_user.friends;
+            }else{
+                friends = [];
+            }
             
-            let friends = current_user.friends;
-
-            console.log("Friends: ", friends);
 
             return res.render('home', {
                 title: "Home",

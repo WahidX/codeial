@@ -51,14 +51,14 @@ form textarea {
     box-shadow: 0px 0px 5px 0px #f34f4f;
     transition-duration: 300ms; }
 
-#friends-container {
+.user-list {
   border: 2px solid lightcoral;
   border-radius: 10px;
   width: 200px;
   padding: 15px; }
-  #friends-container .friend-item a {
+  .user-list .user-item a {
     padding: 5px;
     text-decoration: none; }
-  #friends-container .friend-item a:hover {
+  .user-list .user-item a:hover {
     border-left: 6px solid lightcoral;
     transition-duration: 300ms; }
