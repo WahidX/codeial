@@ -26,12 +26,17 @@
 <div id="sidebar-container">
     
     <div id="friends-container">
-        friends-container
+        <h2><b>Friends</b></h2>
+        <ul>
+            <% for(friend of friends){ %>
+                <p class="friend-item"><a href="/user/profile/<%= friend.id %>"><%= friend.name %></a></p>
+            <% } %>
+        </ul>
     </div>
     <div id="all-users-container">
         <h2>Users:</h2>
         <% for(u of all_users){ %>
-            <p class="friend-item"><a href="/user/profile/<%= u.id %>"><%= u.name %></a></p>
+            <p class="user-item"><a href="/user/profile/<%= u.id %>"><%= u.name %></a></p>
         <% } %>
 
     </div>

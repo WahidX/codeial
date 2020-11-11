@@ -5,20 +5,47 @@ const passport = require('passport');
 const crypto = require('crypto');
 const Reset_Token = require('../models/reset_token');
 const queue = require("../config/kue");
-const resetCodeMailWorker = require("../workers/resetToken_mail_worker");
+const Friendship = require('../models/friendship');
 
 
 module.exports = {
-    profile : function(req, res) {
-        
-        User.findById(req.params.id, function(err, user){
-            if(err){console.log('Err: ',err);return;}
+    profile : async function(req, res) {
+        try{
+            let user = await User.findById(req.params.id);
 
+            //check if user's friend or not
+            let match1, match2;
+            match1 = await Friendship.find({
+                from_user: req.user.id,
+                to_user: req.params.id
+            });
+            
+            if(match1.length === 0){
+                match2 = await Friendship.find({
+                    from_user: req.params.id,
+                    to_user: req.user.id
+                });
+            }
+
+            let isFriend = false;
+            if(match1.length > 0 || match2.length > 0){
+                isFriend = true;
+            }
+            console.log('isFried: ', isFriend);
+    
             return res.render('profile', {
                 title: 'Profile',
-                profile_user: user
+                profile_user: user,
+                isFriend: isFriend
             });
-        })
+        }
+        catch(err){
+            req.flash('error', 'Invalid Request');
+            console.log('Err : ', err);
+            return res.redirect('back');
+        }
+
+        
     },
 
     updateUser : async function(req, res){

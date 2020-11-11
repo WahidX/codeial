@@ -17,7 +17,11 @@
             <h1> NAME: <%= profile_user.name %> </h1>
             <p> EMAIL: <%= profile_user.email %> </p>
             <!-- Logic -->
-            <a id='add-friend' class='non-friend' href="/friend/add-remove/?id1=<%= user.id %>&id2=<%= profile_user.id %>">Add friend</a>
+            <% if(isFriend) { %>
+                <a id='add-friend' class='friend' href="/friend/add-remove/?id1=<%= user.id %>&id2=<%= profile_user.id %>">Remove friend</a>
+            <% } else { %>
+                <a id='add-friend' class='non-friend' href="/friend/add-remove/?id1=<%= user.id %>&id2=<%= profile_user.id %>">Add friend</a>
+            <% } %>
         </div>
 
     <% } %>

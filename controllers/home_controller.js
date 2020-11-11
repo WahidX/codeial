@@ -22,11 +22,22 @@ module.exports = {
             
             let users = await User.find({});
 
-            // console.log(posts[0]);
+            // friends
+            let current_user = await User.findById(req.user.id).populate({
+                path: 'friends',
+                populate: {
+                    path: 'user'
+                }
+            })
+            
+            let friends = current_user.friends;
+
+            console.log("Friends: ", friends);
 
             return res.render('home', {
                 title: "Home",
                 posts: posts,
+                friends: friends,
                 all_users: users
             });
 
