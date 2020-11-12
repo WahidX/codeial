@@ -1,8 +1,8 @@
 <header>
-    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="<%= assetPath('css/header.css') %>">
+
 
     <h1><a href="/">Codial</a></h1>
-    
 
     <% if(locals.user){ %>
         <p> <%= user.name %> </p>
