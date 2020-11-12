@@ -1,0 +1,28 @@
+#profile-container {
+  position: relative;
+  width: 100%;
+  top: 130px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly; }
+  #profile-container img {
+    display: block;
+    border-radius: 5px; }
+  #profile-container form {
+    display: block; }
+    #profile-container form input {
+      margin: 15px; }
+    #profile-container form button {
+      margin: 20px; }
+  #profile-container #details #add-friend {
+    border-radius: 20px;
+    padding: 8px;
+    text-decoration: none;
+    font-size: 1.5rem; }
+  #profile-container #details #add-friend:hover {
+    border: black solid 1px; }
+  #profile-container #details .friend {
+    background-color: #b4b4b4; }
+  #profile-container #details .non-friend {
+    background-color: #378eff; }

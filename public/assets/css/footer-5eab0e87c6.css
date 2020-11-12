@@ -1,0 +1,10 @@
+footer {
+  position: relative;
+  top: 200px;
+  width: 100%;
+  display: flex;
+  background-color: cornflowerblue;
+  box-shadow: 0px 0px 15px 0px #00417e; }
+  footer p {
+    margin: auto;
+    display: inline-block; }
