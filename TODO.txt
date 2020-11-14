@@ -1,2 +1,13 @@
 1. Issue with the comments' user name in home
-2. add remove friend
+2. Gulp build dosent work, have to run the tasks manually
+3. footer is manually patched DONT RUN GULP BUILD
+
+
+Notes: 
+
+For Prod deployment:
+1. Setup envvironment.js file where we kept all the keys,
+2. setup os env vars for Prod,
+3. Gulp > minifies the assets,
+4. Make the gulp generated files available to views using the helper middleware
+

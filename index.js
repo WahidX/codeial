@@ -39,7 +39,7 @@ app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
 // Decode post reqs
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:false}));
 
 
 // View Engine

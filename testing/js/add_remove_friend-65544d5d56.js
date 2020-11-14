@@ -10,6 +10,7 @@
                 type: 'POST',
                 url: $(addRemoveBtn).attr('href'),
                 success: function(data){
+                    console.log(data);
                     if (data.data.friend === true){
                         
                         addRemoveBtn.attr('class', 'friend');

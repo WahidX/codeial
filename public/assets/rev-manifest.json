@@ -1,8 +1,12 @@
 {
-  "css/footer.css": "css/footer-5eab0e87c6.css",
-  "css/form_style.css": "css/form_style-f70f3fdff6.css",
-  "css/header.css": "css/header-fa5aabdfe8.css",
-  "css/home.css": "css/home-df55ad8107.css",
-  "css/layout.css": "css/layout-0f0576585c.css",
-  "css/profile.css": "css/profile-ff3c4e2c86.css"
+  "css/footer.css": "css/footer-d7d099600c.css",
+  "css/form_style.css": "css/form_style-d5d454c5fd.css",
+  "css/header.css": "css/header-fc0ed5c95d.css",
+  "css/home.css": "css/home-92e3098466.css",
+  "css/layout.css": "css/layout-b0bc298dfd.css",
+  "css/profile.css": "css/profile-861ee3ded8.css",
+  "js/add_remove_friend.js": "js/add_remove_friend-04c903bae5.js",
+  "js/home_comments.js": "js/home_comments-b6d8790b94.js",
+  "js/home_posts.js": "js/home_posts-54cf48ee20.js",
+  "js/toggle_likes.js": "js/toggle_likes-37fdbb9154.js"
 }
