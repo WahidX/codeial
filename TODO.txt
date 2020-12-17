@@ -6,8 +6,24 @@
 Notes: 
 
 For Prod deployment:
-1. Setup envvironment.js file where we kept all the keys,
+1. Setup environment.js file where we kept all the keys,
 2. setup os env vars for Prod,
 3. Gulp > minifies the assets,
 4. Make the gulp generated files available to views using the helper middleware
 
+
+API Design:
+
+posts:
+1. GET : all_posts : for home
+2. POST: post/create : for home
+3. GET : post/delete : 
+
+likes:
+1. post/like:id : toggle
+
+user:
+1. create user
+2. create session
+3. update user
+2. profile 
