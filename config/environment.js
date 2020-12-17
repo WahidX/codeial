@@ -11,6 +11,7 @@ const accessLogStream = rfs.createStream('access.log', {
 });
 
 const development = {
+  port: 8000,
   name: 'development',
   asset_path: './assets',
   session_cookie_key: 'some_secret_key',
@@ -37,6 +38,7 @@ const development = {
 };
 
 const production = {
+  port: 80,
   name: process.env.CODEIAL_ENVIRONMENT,
   asset_path: process.env.CODEIAL_ASSET_PATH,
   session_cookie_key: process.env.CODEIAL_SESSION_COOKIE_KEY,

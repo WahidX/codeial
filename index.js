@@ -1,10 +1,10 @@
 const express = require('express');
 const expressEjsLayouts = require('express-ejs-layouts');
-const port = 8000;
 const app = express();
 require('./config/view_helpers')(app);
 
 const env = require('./config/environment');
+const port = process.env.CODEIAL_PORT || 8000;
 const logger = require('morgan');
 const db = require('./config/mongoose');
 const session = require('express-session');
