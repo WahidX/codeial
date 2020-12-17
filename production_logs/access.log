@@ -76,3 +76,6 @@
 ::ffff:127.0.0.1 - - [17/Dec/2020:22:38:16 +0000] "GET /favicon.ico HTTP/1.1" - - "http://localhost:8000/" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
 ::ffff:127.0.0.1 - - [17/Dec/2020:22:38:17 +0000] "GET / HTTP/1.1" 200 3771 "http://localhost:8000/" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
 ::ffff:127.0.0.1 - - [17/Dec/2020:22:38:45 +0000] "GET / HTTP/1.1" 304 - "http://localhost:8000/" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
+::ffff:127.0.0.1 - - [17/Dec/2020:23:21:46 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
+::ffff:127.0.0.1 - - [17/Dec/2020:23:21:46 +0000] "GET /favicon.ico HTTP/1.1" - - "http://localhost:8000/" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
+::ffff:127.0.0.1 - - [17/Dec/2020:23:21:48 +0000] "GET / HTTP/1.1" 200 3771 "http://localhost:8000/" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
