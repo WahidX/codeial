@@ -341,3 +341,12 @@
 [0mGET /user/profile/css/footer.css [33m404[0m 7.073 ms - 166[0m
 [0mGET /user/profile/js/add_remove_friend.js [33m404[0m 3.135 ms - 175[0m
 [0mGET / [36m304[0m 26.254 ms - -[0m
+[0mGET / [36m304[0m 48.374 ms - -[0m
+[0mGET /user/reset-password [32m200[0m 13.353 ms - 1654[0m
+[0mGET /user/css/layout.css [33m404[0m 27.821 ms - 158[0m
+[0mGET /user/css/form_style.css [33m404[0m 26.863 ms - 162[0m
+[0mGET /user/css/header.css [33m404[0m 29.828 ms - 158[0m
+[0mGET /user/css/footer.css [33m404[0m 29.224 ms - 158[0m
+[0mGET / [36m304[0m 32.227 ms - -[0m
+[0mGET /user/sign-out [36m302[0m 5.429 ms - 46[0m
+[0mGET / [32m200[0m 11.070 ms - 4821[0m
