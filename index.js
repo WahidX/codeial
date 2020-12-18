@@ -79,6 +79,12 @@ app.use(passport.setAuthenticatedUser);
 app.use(flash());
 app.use(customMware.setFlash);
 
+// Allowing cors
+app.use(function(req, res, next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "Origin, X-requested-With, Content-Type, Accept");
+});
+
 // Router
 app.use('/', require('./routes'));
 
