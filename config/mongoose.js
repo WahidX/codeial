@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 const env = require('./environment');
 mongoose.connect(
-  process.env.CODEIAL_MONGODB_URI || `mongodb://localhost/${env.db}`
+  process.env.CODEIAL_MONGODB_URI || `mongodb://localhost/${env.db}`,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
 );
 
 const db = mongoose.connection;
@@ -14,3 +18,13 @@ db.once('open', function () {
 });
 
 module.exports = db;
+
+const MongoClient = require('mongodb').MongoClient;
+const uri =
+  'mongodb+srv://droidx:<password>@cluster0.dlecj.mongodb.net/<dbname>?retryWrites=true&w=majority';
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect((err) => {
+  const collection = client.db('test').collection('devices');
+  // perform actions on the collection object
+  client.close();
+});
