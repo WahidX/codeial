@@ -5,7 +5,10 @@ const bcrypt = require('bcrypt');
 
 module.exports.createSession = async function (req, res) {
   try {
-    let user = await User.findOne({ email: req.body.email });
+    let user = await User.findOne({ email: req.body.email }).populate({
+      path: 'friends',
+      select: 'name _id email',
+    });
 
     let isMatch = await bcrypt.compare(req.body.password, user.password);
 
@@ -15,9 +18,12 @@ module.exports.createSession = async function (req, res) {
       });
     }
 
+    user.password = null;
+
     return res.json(200, {
       message: "Sign in successful, here's your token",
       data: {
+        user: user,
         token: jwt.sign({ _id: user._id }, env.jwt_secret, {
           expiresIn: '10000000',
         }),
@@ -45,7 +51,6 @@ module.exports.createUser = async function (req, res) {
         message: 'Email is already registered',
       });
     }
-    console.log('user: ', user);
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -55,6 +60,8 @@ module.exports.createUser = async function (req, res) {
       password: hashedPassword,
       name: req.body.name,
     });
+
+    newUser.password = null;
 
     return res.status(200).json({
       message: 'User created Successfully',
@@ -104,10 +111,15 @@ module.exports.updateUser = async function (req, res) {
       await req.user.save();
     }
 
+    let userToBeSent = await User.findById(req.user.id).populate({
+      path: 'friends',
+      select: '_id name email',
+    });
+
     return res.status(200).json({
       message: 'user updated successfully',
       data: {
-        user: req.user,
+        user: userToBeSent,
       },
     });
   } catch (err) {

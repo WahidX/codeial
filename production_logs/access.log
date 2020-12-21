@@ -350,3 +350,9 @@
 [0mGET / [36m304[0m 32.227 ms - -[0m
 [0mGET /user/sign-out [36m302[0m 5.429 ms - 46[0m
 [0mGET / [32m200[0m 11.070 ms - 4821[0m
+[0mGET / [32m200[0m 1009.840 ms - 6822[0m
+[0mGET /favicon.ico [0m-[0m - ms - -[0m
+[0mPOST /api/v1/users/create-session [32m200[0m 1888.569 ms - 490[0m
+[0mPOST /api/v1/users/create-session [32m200[0m 745.862 ms - 432[0m
+[0mPOST /api/v1/users/create-user [33m422[0m 403.366 ms - 41[0m
+[0mPOST /api/v1/users/create-user [32m200[0m 867.390 ms - 436[0m
