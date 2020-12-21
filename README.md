@@ -1,4 +1,4 @@
-# codial
+# codeial
 Social Networking Site using Node, Express and MongoDB.
 
 ## Techs used
