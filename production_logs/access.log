@@ -356,3 +356,5 @@
 [0mPOST /api/v1/users/create-session [32m200[0m 745.862 ms - 432[0m
 [0mPOST /api/v1/users/create-user [33m422[0m 403.366 ms - 41[0m
 [0mPOST /api/v1/users/create-user [32m200[0m 867.390 ms - 436[0m
+[0mPATCH /api/v1/users/ [33m401[0m 12.085 ms - -[0m
+[0mPATCH /api/v1/users/ [33m401[0m 206.411 ms - -[0m
