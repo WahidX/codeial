@@ -4,11 +4,15 @@ const Comment = require('../../../models/comment');
 module.exports.index = async function (req, res) {
   let posts = await Post.find({})
     .sort('-createdAt')
-    .populate('user')
+    .populate({
+      path: 'user',
+      select: '_id name email'
+    })
     .populate({
       path: 'comments',
       populate: {
         path: 'user',
+        select: '_id name email',
       },
     });
 
@@ -35,10 +39,16 @@ module.exports.createPost = async function (req, res) {
       user: req.user.id,
     });
 
+    let postObj = await Post.findById(newPost._id)
+      .populate({
+        path: 'user',
+        select: '_id name email'
+      });
+
     return res.status(200).json({
       message: 'post created successfully!',
       data: {
-        post: newPost,
+        post: postObj,
       },
     });
   } catch (err) {
@@ -71,3 +81,4 @@ module.exports.destroy = async function (req, res) {
     });
   }
 };
+

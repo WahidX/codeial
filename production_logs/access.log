@@ -368,3 +368,9 @@
 [0mPATCH /api/v1/users/ [32m200[0m 933.843 ms - 175[0m
 [0mPATCH /api/v1/users/ [33m404[0m 704.344 ms - 38[0m
 [0mPATCH /api/v1/users/ [32m200[0m 1063.925 ms - 175[0m
+[0mPOST /api/v1/users/create-session [32m200[0m 398.519 ms - 433[0m
+[0mPATCH /api/v1/users/ [32m200[0m 1408.424 ms - 175[0m
+[0mPOST /api/v1/posts/create [32m200[0m 1255.464 ms - 256[0m
+[0mPOST /api/v1/posts/create [32m200[0m 1210.179 ms - 297[0m
+[0mDELETE /api/v1/posts/5fe236aa5805d954ae83fef7 [32m200[0m 1110.822 ms - 54[0m
+[0mDELETE /api/v1/posts/5fe236265624494b7ed250fc [32m200[0m 962.280 ms - 54[0m
