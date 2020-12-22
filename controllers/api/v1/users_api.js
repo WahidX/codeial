@@ -89,37 +89,49 @@ module.exports.updateUser = async function (req, res) {
   }
 
   try {
-    let user = await User.findOne({ email: req.body.email });
-    if (user && user.id !== req.user.id) {
-      return res.status(404).json({
-        message: 'Email already registered',
+    let user = await User.findOne({ email: req.body.email })
+    .select('_id name email friends avatar')
+    .populate({
+      path: 'friends',
+      select: '_id name email'
+    });
+
+    if (user){
+      if(user.id !== req.user.id) {
+        return res.status(404).json({
+          message: 'Email already registered',
+        });
+      }
+    }
+    else{
+      user = await User.findById(req.user._id)
+      .select('_id name email friends avatar')
+      .populate({
+        path: 'friends',
+        select: '_id name email'
       });
     }
+
     let changed = false;
 
-    if (req.user.name !== req.body.name) {
-      req.user.name !== req.body.name;
+    if (user.name !== req.body.name) {
+      user.name = req.body.name;
       changed = true;
     }
 
-    if (req.user.email !== req.body.email) {
-      req.user.email !== req.body.email;
+    if (user.email !== req.body.email) {
+      user.email = req.body.email;
       changed = true;
     }
 
     if (changed) {
-      await req.user.save();
+      await user.save();
     }
-
-    let userToBeSent = await User.findById(req.user.id).populate({
-      path: 'friends',
-      select: '_id name email',
-    });
 
     return res.status(200).json({
       message: 'user updated successfully',
       data: {
-        user: userToBeSent,
+        user: user,
       },
     });
   } catch (err) {
