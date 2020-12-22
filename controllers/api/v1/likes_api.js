@@ -13,7 +13,7 @@ module.exports.toggleLike = async function(req, res){
             likeable = await Comment.findById(req.query.id).populate('likes');
         }
 
-        // Check if like already there or not
+        // Check if already liked or not
         let existingLike = await Like.findOne({
             user: req.user._id,
             likeable: req.query.id,
@@ -22,10 +22,8 @@ module.exports.toggleLike = async function(req, res){
 
         if(existingLike){   // remove like
             likeable.likes.pull(existingLike._id);
-            likeable.save();
 
             existingLike.remove();
-            
             deleted = true;
         }
         else{               // adding like
@@ -34,15 +32,12 @@ module.exports.toggleLike = async function(req, res){
                 likeable: req.query.id,
                 onModel: req.query.type
             });
-            likeable.likes.push(newLike._id);
-            likeable.save();
+            likeable.likes.push(newLike._id);    
         }
 
+				likeable.save();
         return res.json(200, {
             message: "Request successful",
-            data: {
-                deleted: deleted
-            }
         });
 
     }
