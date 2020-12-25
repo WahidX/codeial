@@ -82,3 +82,6 @@
 [0mPOST /api/v1/likes/toggle/?id=5fe4f1b146c58811201287cc&type=Post [32m200[0m 829.526 ms - 19[0m
 [0mPOST /api/v1/likes/toggle/?id=5fe4f1b146c58811201287cc&type=Post [32m200[0m 979.544 ms - 19[0m
 [0mPOST /api/v1/likes/toggle/?id=5fe4f1b146c58811201287cc&type=Post [32m200[0m 1066.074 ms - 21[0m
+[0mGET / [32m200[0m 1002.370 ms - 3435[0m
+[0mGET /favicon.ico [0m-[0m - ms - -[0m
+[0mGET / [36m304[0m 906.737 ms - -[0m
