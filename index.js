@@ -3,6 +3,9 @@ const expressEjsLayouts = require('express-ejs-layouts');
 const app = express();
 require('./config/view_helpers')(app);
 
+var cors = require('cors');
+app.use(cors());
+
 const env = require('./config/environment');
 const port = process.env.PORT || 8000;
 const logger = require('morgan');
@@ -80,12 +83,12 @@ app.use(flash());
 app.use(customMware.setFlash);
 
 // Allowing cors
-app.use(function(req, res, next){
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, Authorization, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PATCH");
-  next();
-});
+// app.use(function(req, res, next){
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, Authorization, X-Requested-With, Content-Type, Accept");
+//   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PATCH");
+//   next();
+// });
 
 // Router
 app.use('/', require('./routes'));

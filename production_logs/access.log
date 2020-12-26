@@ -167,3 +167,16 @@
 [0mGET /user/css/footer.css [33m404[0m 173.833 ms - 158[0m
 [0mPOST /user/create-session [36m302[0m 345.954 ms - 46[0m
 [0mGET / [32m200[0m 1408.490 ms - 5029[0m
+[0mPOST /api/v1/users/create-session [32m200[0m 524.315 ms - 516[0m
+[0mPOST /api/v1/search/?key=act&type [33m404[0m 369.249 ms - 30[0m
+[0mPOST /api/v1/search/?key=act&type=gen [32m200[0m 869.673 ms - 57[0m
+[0mPOST /api/v1/search/?key=react&type=gen [32m200[0m 731.339 ms - 57[0m
+[0mPOST /api/v1/search/?key=react&type=user [32m200[0m 625.893 ms - 39[0m
+[0mPOST /api/v1/search/?key=react&type=user [32m200[0m 703.068 ms - 88[0m
+[0mPOST /api/v1/search/?key=rea&type=user [32m200[0m 667.310 ms - 39[0m
+[0mPOST /api/v1/search/?key=rea&type=user [32m200[0m 687.008 ms - 88[0m
+[0mPOST /api/v1/search/?key=no&type=user [32m200[0m 613.978 ms - 87[0m
+[0mPOST /api/v1/search/?key=no&type=gen [32m200[0m 879.638 ms - 57[0m
+[0mPOST /api/v1/search/?key=no&type=gen [32m200[0m 861.524 ms - 105[0m
+[0mPOST /api/v1/search/?key=no&type=gen [32m200[0m 974.217 ms - 226[0m
+[0mPOST /api/v1/search/?key=no&type=post [32m200[0m 805.678 ms - 160[0m
