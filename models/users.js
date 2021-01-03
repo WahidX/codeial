@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    emailAuthenticated: {
+      type: Boolean,
+      default: false,
+    },
     avatar: {
       type: String,
     },

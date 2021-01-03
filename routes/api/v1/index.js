@@ -7,4 +7,8 @@ router.use('/likes', require('./likes'));
 router.use('/friends', require('./friendship'));
 router.use('/search', require('./search'));
 
+router.get('/', function (req, res) {
+  return res.send('API is working fine');
+});
+
 module.exports = router;

@@ -22,6 +22,14 @@ router.patch(
   userApi.changePassword
 );
 
+// Email confirmation apis
+router.get('/econfirmation/:jwt', userApi.confirmEmail);
+router.get(
+  '/resend-econfirm',
+  passport.authenticate('jwt', { session: false }),
+  userApi.resendConfirmationMail
+);
+
 router.post(
   '/profile',
   passport.authenticate('jwt', { session: false }),

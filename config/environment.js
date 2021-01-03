@@ -13,6 +13,9 @@ const accessLogStream = rfs.createStream('access.log', {
 const development = {
   port: 8000,
   name: 'development',
+  api_v: process.env.AUTH_API_V,
+  base_url: process.env.AUTH_BASE_URL,
+  front_base_url: process.env.FRONT_BASE_URL || 'http://localhost:3000',
   asset_path: './assets',
   session_cookie_key: 'some_secret_key',
   db: 'xspace_dev',
@@ -22,8 +25,8 @@ const development = {
     port: 587,
     secure: false,
     auth: {
-      user: 'mailer.droidx',
-      pass: 'Never@0%',
+      user: process.env.MAIL_ADDR,
+      pass: process.env.MAIL_PASS,
     },
   },
   google_client_id:
@@ -40,6 +43,9 @@ const development = {
 const production = {
   port: 80,
   name: process.env.CODEIAL_ENVIRONMENT,
+  api_v: process.env.AUTH_API_V,
+  base_url: process.env.AUTH_BASE_URL,
+  front_base_url: process.env.FRONT_BASE_URL,
   asset_path: process.env.CODEIAL_ASSET_PATH,
   session_cookie_key: process.env.CODEIAL_SESSION_COOKIE_KEY,
   db: process.env.CODEIAL_DB,

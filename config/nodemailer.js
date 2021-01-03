@@ -1,9 +1,9 @@
-// const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 // const ejs = require('ejs');
 // const path = require('path');
-// const env = require('./environment');
+const env = require('./environment');
 
-// let transporter = nodemailer.createTransport(env.smtp);
+let transporter = nodemailer.createTransport(env.smtp);
 
 // let renderTemplate = (data, relativePath) => {
 //     let mailHTML;
@@ -19,7 +19,7 @@
 //     return mailHTML;
 // }
 
-// module.exports = {
-//     transporter: transporter,
-//     renderTemplate : renderTemplate
-// }
+module.exports = {
+  transporter: transporter,
+  // renderTemplate : renderTemplate
+};
