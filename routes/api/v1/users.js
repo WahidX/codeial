@@ -11,9 +11,15 @@ router.post('/create-session', userApi.createSession);
 // passport.authenticate('jwt', { session: false }),
 
 router.patch(
-  '/',
+  '/update',
   passport.authenticate('jwt', { session: false }),
   userApi.updateUser
+);
+
+router.patch(
+  '/change-password',
+  passport.authenticate('jwt', { session: false }),
+  userApi.changePassword
 );
 
 router.post(
