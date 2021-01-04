@@ -7,3 +7,8 @@
 [0mGET /api/v1/ [32m200[0m 184.181 ms - 4[0m
 [0mPOST /api/v1/users/create-user [32m200[0m 715.750 ms - 501[0m
 [0mGET /api/v1/users/econfirmation/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmYyMWZiMjZlYzFlODVhNmE0M2NkZjAiLCJpYXQiOjE2MDk3MDMzNDYsImV4cCI6MTYwOTc4OTc0Nn0.cXZh4rkzHjId07IpRQqphp0hpzMpbSruCb5iZVuwMlI [32m200[0m 404.964 ms - 46[0m
+[0mPOST /api/v1/users/create-user [33m422[0m 580.042 ms - 41[0m
+[0mPOST /api/v1/users/create-user [32m200[0m 683.108 ms - 506[0m
+[0mGET /api/v1/users/econfirmation/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmYyMjVlY2MxYzQ0ODZhMjU2ZjRmYzAiLCJpYXQiOjE2MDk3MDQ5NDAsImV4cCI6MTYwOTc5MTM0MH0.sy5sz5Qk-iB4Y6N7j3ergL3IkxyfW1simVwYFzvzHM8 [32m200[0m 498.170 ms - 46[0m
+[0mPOST /api/v1/auth/create-session [33m422[0m 624.544 ms - 38[0m
+[0mPOST /api/v1/auth/create-session [32m200[0m 805.680 ms - 543[0m
