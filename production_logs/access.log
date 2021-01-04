@@ -12,3 +12,14 @@
 [0mGET /api/v1/users/econfirmation/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmYyMjVlY2MxYzQ0ODZhMjU2ZjRmYzAiLCJpYXQiOjE2MDk3MDQ5NDAsImV4cCI6MTYwOTc5MTM0MH0.sy5sz5Qk-iB4Y6N7j3ergL3IkxyfW1simVwYFzvzHM8 [32m200[0m 498.170 ms - 46[0m
 [0mPOST /api/v1/auth/create-session [33m422[0m 624.544 ms - 38[0m
 [0mPOST /api/v1/auth/create-session [32m200[0m 805.680 ms - 543[0m
+[0mGET / [32m200[0m 820.111 ms - 4163[0m
+[0mGET /favicon.ico [33m404[0m 1.963 ms - 150[0m
+[0mPOST /api/v1/auth/create-session [32m200[0m 569.092 ms - 543[0m
+[0mPOST /api/v1/users/get-user/?id=5fe66376d2dba235c7f842cd [31m501[0m 442.159 ms - 35[0m
+[0mPOST /api/v1/users/get-user/?id=5fe66376d2dba235c7f842cd [33m404[0m 703.050 ms - 27[0m
+[0mPOST /api/v1/users/get-user/?id=5fe66376d2dba235c7f842cd [33m404[0m 596.001 ms - 27[0m
+[0mGET /api/v1/users/get-user/?id=5fe66376d2dba235c7f842cd [33m404[0m 203.023 ms - 161[0m
+[0mPOST /api/v1/users/get-user/?id=5fe66376d2dba235c7f842cd [33m404[0m 642.761 ms - 27[0m
+[0mPOST /api/v1/users/get-user/?id=5fe66376d2dba235c7f842cd [33m404[0m 762.040 ms - 27[0m
+[0mPOST /api/v1/users/get-user/?id=5fe66376d2dba235c7f842cd [31m501[0m 656.837 ms - 35[0m
+[0mPOST /api/v1/users/get-user/?id=5fe66376d2dba235c7f842cd [32m200[0m 638.723 ms - 121[0m

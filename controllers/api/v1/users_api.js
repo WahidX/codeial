@@ -98,3 +98,26 @@ module.exports.updateUser = async function (req, res) {
   }
 };
 
+module.exports.getUser = async function(req, res) {
+  try{
+    console.log(req.query.id);
+    let user = await User.findById(req.query.id)
+    .select('name avatar email bio follower following');
+
+    if (!user){
+      return res.status(404).json({
+        message: 'No User found'
+      });
+    }
+    
+    return res.status(200).json({
+      message: 'User found',
+      user,
+    })
+  } catch(err){
+    console.log('Err: ',err);
+    return res.status(501).json({
+      message: 'Internal Server Error'
+    });
+  }
+}

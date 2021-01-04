@@ -12,6 +12,13 @@ router.patch(
 );
 
 router.post(
+  '/get-user',
+  passport.authenticate('jwt', { session: false }),
+  userApi.getUser
+);
+
+
+router.post(
   '/profile',
   passport.authenticate('jwt', { session: false }),
   function (req, res) {
