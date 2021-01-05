@@ -29,16 +29,16 @@ module.exports.generalSearch = async function (req, res) {
       results_user = await User.find({
         name: { $regex: req.query.key },
       })
-        .select('_id name avatar')
+        .select('_id name avatar email bio following follower')
         .sort('-createdAt');
 
       results_post = await Post.find({
-        content: { $regex: req.query.key },
+        content: { $regex: req.query.key, $options: 'i' },
       })
         .select('_id content user')
         .populate({
           path: 'user',
-          select: '_id name avatar',
+          select: '_id name avatar email bio',
         })
         .sort('-createdAt');
     }
