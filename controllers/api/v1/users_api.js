@@ -1,9 +1,9 @@
 const User = require('../../../models/users');
+const Post = require('../../../models/post');
 const jwt = require('jsonwebtoken');
 const env = require('../../../config/environment');
 const bcrypt = require('bcrypt');
 const { transporter } = require('../../../config/nodemailer');
-
 
 module.exports.updateUser = async function (req, res) {
   try {
@@ -98,26 +98,46 @@ module.exports.updateUser = async function (req, res) {
   }
 };
 
-module.exports.getUser = async function(req, res) {
-  try{
-    console.log(req.query.id);
-    let user = await User.findById(req.query.id)
-    .select('name avatar email bio follower following');
-
-    if (!user){
+module.exports.getUser = async function (req, res) {
+  try {
+    if (!req.query.id || !req.query.type) {
       return res.status(404).json({
-        message: 'No User found'
+        message: 'Invalid request',
       });
     }
-    
-    return res.status(200).json({
-      message: 'User found',
-      user,
-    })
-  } catch(err){
-    console.log('Err: ',err);
+
+    let user = await User.findById(req.query.id).select(
+      'name avatar email bio follower following'
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'No User found',
+      });
+    }
+
+    if (req.query.type == 'short') {
+      return res.status(200).json({
+        message: 'User found',
+        user,
+      });
+    } else {
+      let posts = await Post.find({
+        user: user.id,
+      });
+
+      return res.status(200).json({
+        message: 'User found',
+        user,
+        posts,
+      });
+    }
+  } catch (err) {
+    console.log('Err: ', err);
     return res.status(501).json({
-      message: 'Internal Server Error'
+      message: 'Internal Server Error',
     });
   }
-}
+};
+
+// add condition to send posts for that user
