@@ -124,6 +124,9 @@ module.exports.getUser = async function (req, res) {
     } else {
       let posts = await Post.find({
         user: user.id,
+      }).populate({
+        path: 'user',
+        select: '_id name email bio following follower avatar',
       });
 
       return res.status(200).json({
@@ -139,5 +142,3 @@ module.exports.getUser = async function (req, res) {
     });
   }
 };
-
-// add condition to send posts for that user
