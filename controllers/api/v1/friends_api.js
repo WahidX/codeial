@@ -2,24 +2,21 @@ const User = require('../../../models/users');
 const Friendship = require('../../../models/friendship');
 
 module.exports.getFriends = async function (req, res) {
-  if (req.user.following === 0)
+  if (req.user.following === 0) {
     return res.status(200).json({
       message: 'Successful',
       friends: [],
     });
+  }
 
-  let friends = await Friendship.find({
-    from_user: req.user._id,
-  })
-    .select('to_user')
-    .populate({
-      path: 'to_user',
-      select: '_id name',
-    });
+  let user = await User.findById(req.user.id).populate({
+    path: 'friends',
+    select: '_id name email avatar follower following',
+  });
 
   return res.status(200).json({
     message: 'Reqest successful',
-    friends,
+    friends: user.friends,
   });
 };
 
