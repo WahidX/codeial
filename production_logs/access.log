@@ -69,3 +69,5 @@
 [0mPOST /api/v1/friends/add-remove?id=5ff61692f2501f0024adc06a [32m200[0m 1092.066 ms - 32[0m
 [0mPOST /api/v1/friends/add-remove?id=5ff61692f2501f0024adc06a [32m200[0m 1086.229 ms - 34[0m
 [0mPOST /api/v1/friends/add-remove?id=5ff61692f2501f0024adc06a [32m200[0m 1088.729 ms - 32[0m
+[0mGET / [32m200[0m 710.683 ms - 4563[0m
+[0mGET /favicon.ico [0m-[0m - ms - -[0m

@@ -45,9 +45,9 @@ module.exports.addRemoveFriend = async function (req, res) {
       });
       req.user.friends.pull(req.query.id);
       message = 'Removed successfully';
-      req.user.following++;
+      req.user.following--;
 
-      targetUser.follower++;
+      targetUser.follower--;
       targetUser.save();
     } else {
       let newFriendShip = await Friendship.create({
@@ -56,9 +56,9 @@ module.exports.addRemoveFriend = async function (req, res) {
       });
       req.user.friends.push(req.query.id);
       message = 'Added successfully';
-      req.user.following--;
+      req.user.following++;
 
-      targetUser.follower--;
+      targetUser.follower++;
       targetUser.save();
     }
 
