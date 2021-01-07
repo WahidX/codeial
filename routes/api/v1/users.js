@@ -20,14 +20,11 @@ router.post(
   '/profile',
   passport.authenticate('jwt', { session: false }),
   function (req, res) {
+    let user = req.user;
+    user.password = '';
     res.status(200).json({
       message: 'noice',
-      data: {
-        user: {
-          ...req.user,
-          password: '',
-        },
-      },
+      user,
     });
   }
 );
