@@ -92,3 +92,16 @@
 [0mPOST /api/v1/friends/add-remove?id=5ff61692f2501f0024adc06a [32m200[0m 1379.336 ms - 22[0m
 [0mPOST /api/v1/friends/add-remove?id=5ff61692f2501f0024adc06a [32m200[0m 887.053 ms - 73[0m
 [0mPOST /api/v1/friends/add-remove?id=5ff61692f2501f0024adc06a [32m200[0m 1016.086 ms - 70[0m
+[0mPOST /api/v1/users/get-user/?id=5fe66376d2dba235c7f842cd&type=short [33m401[0m 263.386 ms - -[0m
+[0mGET /api/v1/friends/ [32m200[0m 863.293 ms - 265[0m
+[0mPOST /api/v1/friends/add-remove?id=5ff61692f2501f0024adc06a [32m200[0m 873.340 ms - 73[0m
+[0mGET /api/v1/friends/ [32m200[0m 469.863 ms - 37[0m
+[0mPOST /api/v1/friends/add-remove?id=5ff61692f2501f0024adc06a [32m200[0m 1079.738 ms - 70[0m
+[0mGET /api/v1/friends/ [32m200[0m 789.642 ms - 265[0m
+[0mPOST /api/v1/auth/create-session [32m200[0m 617.214 ms - 566[0m
+[0mPOST /api/v1/users/get-user/?id=5ff61708f2501f0024adc06f&type=short [32m200[0m 382.532 ms - 313[0m
+[0mPOST /api/v1/users/get-user/?id=5ff61708f2501f0024adc06f&type=full [32m200[0m 399.442 ms - 313[0m
+[0mPOST /api/v1/users/get-user/?id=5ff61663f2501f0024adc067&type=full [32m200[0m 1379.848 ms - 520[0m
+[0mPOST /api/v1/users/get-user/?id=5ff61663f2501f0024adc067&type=full [31m501[0m 645.493 ms - 35[0m
+[0mPOST /api/v1/users/get-user/?id=5ff61663f2501f0024adc067&type=full [32m200[0m 1042.548 ms - 520[0m
+[0mPOST /api/v1/users/get-user/?id=5ff61708f2501f0024adc06f&type=full [32m200[0m 886.974 ms - 673[0m

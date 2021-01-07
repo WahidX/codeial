@@ -106,14 +106,20 @@ module.exports.getUser = async function (req, res) {
       });
     }
 
-    let user = await User.findById(req.query.id).select(
-      'name avatar email bio follower following'
-    );
+    let user;
+    if (req.query.id === req.user.id) {
+      user = req.user;
+      user.password = null;
+    } else {
+      user = await User.findById(req.query.id).select(
+        '_id name avatar email bio follower following'
+      );
 
-    if (!user) {
-      return res.status(404).json({
-        message: 'No User found',
-      });
+      if (!user) {
+        return res.status(404).json({
+          message: 'No User found',
+        });
+      }
     }
 
     if (req.query.type == 'short') {
