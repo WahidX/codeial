@@ -4,7 +4,6 @@ const env = require('../../../config/environment');
 const bcrypt = require('bcrypt');
 const { transporter } = require('../../../config/nodemailer');
 
-
 module.exports.createUser = async function (req, res) {
   try {
     if (req.body.password !== req.body.confirm_password) {
@@ -60,12 +59,10 @@ module.exports.createUser = async function (req, res) {
     return res.status(200).json({
       message: 'User created Successfully',
       success: true,
-      data: {
-        user: newUser,
-        token: jwt.sign({ _id: newUser._id }, env.jwt_secret, {
-          expiresIn: '10000000',
-        }),
-      },
+      user: newUser,
+      token: jwt.sign({ _id: newUser._id }, env.jwt_secret, {
+        expiresIn: '10000000',
+      }),
     });
   } catch (err) {
     console.log('Err:  ', err);
@@ -108,7 +105,6 @@ module.exports.createSession = async function (req, res) {
     });
   }
 };
-
 
 module.exports.changePassword = async function (req, res) {
   try {
