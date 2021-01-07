@@ -1,6 +1,10 @@
 const User = require('../../../models/users');
 const Friendship = require('../../../models/friendship');
 
+/*
+  Friends = Followings
+*/
+
 module.exports.getFriends = async function (req, res) {
   if (req.user.following === 0) {
     return res.status(200).json({
@@ -9,14 +13,24 @@ module.exports.getFriends = async function (req, res) {
     });
   }
 
-  let user = await User.findById(req.user.id).populate({
-    path: 'friends',
-    select: '_id name email avatar follower following',
+  let friendShips = await Friendship.find({
+    from_user: req.user.id,
+  })
+    .select('to_user')
+    .populate({
+      path: 'to_user',
+      select: '_id name email avatar bio following follower',
+    });
+
+  let friends = [];
+
+  friendShips.map((friend) => {
+    friends.push(friend.to_user);
   });
 
   return res.status(200).json({
-    message: 'Reqest successful',
-    friends: user.friends,
+    message: 'Request successful',
+    friends,
   });
 };
 
@@ -27,45 +41,50 @@ module.exports.addRemoveFriend = async function (req, res) {
         message: 'Invalid request',
       });
     }
+    let targetUser = await User.findById(req.query.id);
+    let message;
 
     let existingFriendShip = await Friendship.findOne({
       from_user: req.user._id,
       to_user: req.query.id,
     });
 
-    let message;
+    /*
+      1. friendShip add del
+      2. req.user.friends push pull
+      3. follow counts for both
+    */
 
-    let targetUser = await User.findById(req.query.id);
+    if (existingFriendShip) {
+      existingFriendShip.remove();
 
-    if (req.user.friends.indexOf(req.query.id) !== -1) {
-      // already friend
-      await Friendship.deleteOne({
-        from_user: req.user._id,
-        to_user: req.query.id,
-      });
       req.user.friends.pull(req.query.id);
-      message = 'Removed successfully';
-      req.user.following--;
 
+      req.user.following--;
       targetUser.follower--;
-      targetUser.save();
+
+      message = 'Unfollowed';
     } else {
-      let newFriendShip = await Friendship.create({
+      await Friendship.create({
         from_user: req.user._id,
         to_user: req.query.id,
       });
-      req.user.friends.push(req.query.id);
-      message = 'Added successfully';
-      req.user.following++;
 
+      req.user.friends.push(req.query.id);
+
+      req.user.following++;
       targetUser.follower++;
-      targetUser.save();
+
+      message = 'Followed';
     }
 
     req.user.save();
+    targetUser.save();
 
     return res.status(200).json({
       message,
+      req_user_following: req.user.following,
+      target_user_follower: targetUser.follower,
     });
   } catch (err) {
     console.log('ERR: ', err);
