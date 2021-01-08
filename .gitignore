@@ -1,2 +1,4 @@
 node_modules/
-production_logs/
+production_logs/access.logs
+uploads/users/avatars/
+uploads/posts/
