@@ -4,7 +4,6 @@ const router = express.Router();
 const passport = require('passport');
 const authApi = require('../../../controllers/api/v1/auth_api');
 
-
 router.post('/create-user', authApi.createUser);
 router.post('/create-session', authApi.createSession);
 router.patch(
@@ -20,5 +19,6 @@ router.get(
   authApi.resendConfirmationMail
 );
 
+router.post('/google', authApi.authGoogle);
 
 module.exports = router;

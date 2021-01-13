@@ -197,3 +197,31 @@ module.exports.resendConfirmationMail = async function (req, res) {
     message: 'Email sent successfully',
   });
 };
+
+module.exports.authGoogle = async function (req, res) {
+  let user = await User.find({ email: req.body.email });
+
+  if (existingUser) {
+    req.user = user;
+  } else {
+    let user = await User.create({
+      email: req.body.email,
+      name: req.body.name,
+      password: 'google-' + crypto.randomBytes(20).toString('hex'),
+      avatar: req.body.avatar,
+    });
+  }
+
+  user.password = null;
+
+  // TODO
+  // We have to store the user token in db
+
+  return res.status(200).json({
+    message: 'Welcome!',
+    user: user,
+    token: jwt.sign({ _id: user._id }, env.jwt_secret, {
+      expiresIn: '10000000',
+    }),
+  });
+};
