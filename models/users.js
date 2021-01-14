@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
+      trim: true,
       required: true,
       unique: true,
     },
@@ -15,6 +16,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     name: {
+      trim: true,
       type: String,
       required: true,
     },
@@ -22,12 +24,19 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    accountType: {
+      type: String,
+      enum: ['local', 'foreign'],
+      default: 'local',
+      required: true,
+    },
     avatar: {
       type: String,
       default: '',
     },
     bio: {
       type: String,
+      trim: true,
       default: '',
     },
     friends: [

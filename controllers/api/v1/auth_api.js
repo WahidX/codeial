@@ -1,6 +1,7 @@
 const User = require('../../../models/users');
 const jwt = require('jsonwebtoken');
 const env = require('../../../config/environment');
+const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const { transporter } = require('../../../config/nodemailer');
 
@@ -45,7 +46,7 @@ module.exports.createUser = async function (req, res) {
           });
         }
 
-        const url = `${env.base_url}/api/${env.api_v}/users/econfirmation/${token}`;
+        const url = `${env.base_url}/api/${env.api_v}/auth/econfirmation/${token}`;
         tokenToSend = token;
 
         transporter.sendMail({
@@ -60,9 +61,7 @@ module.exports.createUser = async function (req, res) {
       message: 'User created Successfully',
       success: true,
       user: newUser,
-      token: jwt.sign({ _id: newUser._id }, env.jwt_secret, {
-        expiresIn: '10000000',
-      }),
+      token: tokenToSend,
     });
   } catch (err) {
     console.log('Err:  ', err);
@@ -110,7 +109,7 @@ module.exports.changePassword = async function (req, res) {
   try {
     if (
       !req.body.oldPassword ||
-      !req.body.oldPassword ||
+      !req.body.newPassword ||
       !req.body.confirmPassword ||
       req.body.newPassword !== req.body.confirmPassword
     ) {
@@ -119,20 +118,32 @@ module.exports.changePassword = async function (req, res) {
       });
     }
 
-    let isMatch = await bcrypt.compare(req.body.oldPassword, req.user.password);
-    if (isMatch) {
-      const salt = await bcrypt.genSalt(10);
+    // check if the user is local or not
+    if (req.user.accountType === 'local') {
+      let isMatch = await bcrypt.compare(
+        req.body.oldPassword,
+        req.user.password
+      );
+      if (isMatch) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
+        req.user.password = hashedPassword;
+        req.user.save();
+      } else {
+        return res.status(401).json({
+          message: 'Incorrect Password',
+        });
+      }
+    } else {
+      // for foreign users set the password
       const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
       req.user.password = hashedPassword;
+      req.user.accountType = 'local';
       req.user.save();
-
-      return res.status(200).json({
-        message: 'Password Changed Successfully',
-      });
     }
 
-    return res.status(401).json({
-      message: 'Incorrect Password',
+    return res.status(200).json({
+      message: 'Password Updated Successfully',
     });
   } catch (err) {
     console.log('Err: ', err);
@@ -167,7 +178,6 @@ module.exports.confirmEmail = async function (req, res) {
 };
 
 module.exports.resendConfirmationMail = async function (req, res) {
-  let tokenToSend;
   jwt.sign(
     { _id: req.user._id },
     env.jwt_secret,
@@ -182,8 +192,7 @@ module.exports.resendConfirmationMail = async function (req, res) {
         });
       }
 
-      const url = `${env.base_url}/api/${env.api_v}/users/econfirmation/${token}`;
-      tokenToSend = token;
+      const url = `${env.base_url}/api/${env.api_v}/auth/econfirmation/${token}`;
 
       transporter.sendMail({
         to: req.user.email,
@@ -199,29 +208,57 @@ module.exports.resendConfirmationMail = async function (req, res) {
 };
 
 module.exports.authGoogle = async function (req, res) {
-  let user = await User.find({ email: req.body.email });
+  let user = await User.findOne({ email: req.body.email });
+  let tokenToSend;
 
-  if (existingUser) {
+  console.log('req, NAME: ', user);
+
+  if (user) {
     req.user = user;
+    tokenToSend = jwt.sign({ _id: user._id }, env.jwt_secret, {
+      expiresIn: '10000000',
+    });
   } else {
-    let user = await User.create({
+    user = await User.create({
       email: req.body.email,
       name: req.body.name,
-      password: 'google-' + crypto.randomBytes(20).toString('hex'),
+      password: crypto.randomBytes(20).toString('hex'),
       avatar: req.body.avatar,
+      accountType: 'foreign',
     });
+
+    // Sending confirmation email
+    jwt.sign(
+      { _id: user._id },
+      env.jwt_secret,
+      {
+        expiresIn: '1d',
+      },
+      (err, token) => {
+        if (err) {
+          console.log('Err: ', err);
+          return res.status(500).json({
+            message: 'Internal Server Error',
+          });
+        }
+
+        const url = `${env.base_url}/api/${env.api_v}/auth/econfirmation/${token}`;
+        tokenToSend = token;
+
+        transporter.sendMail({
+          to: user.email,
+          subject: 'Confirm Email',
+          html: `<h2>Hi, ${user.name}, <p>Please confirm your email.</p><p><a href=${url}>Click Here</a></p></h2>`,
+        });
+      }
+    );
   }
 
   user.password = null;
 
-  // TODO
-  // We have to store the user token in db
-
   return res.status(200).json({
     message: 'Welcome!',
     user: user,
-    token: jwt.sign({ _id: user._id }, env.jwt_secret, {
-      expiresIn: '10000000',
-    }),
+    token: tokenToSend,
   });
 };
