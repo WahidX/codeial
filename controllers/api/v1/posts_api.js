@@ -6,13 +6,13 @@ module.exports.index = async function (req, res) {
     .sort('-createdAt')
     .populate({
       path: 'user',
-      select: '_id name email'
+      select: '_id name email avatar',
     })
     .populate({
       path: 'comments',
       populate: {
         path: 'user',
-        select: '_id name email',
+        select: '_id name email avatar',
       },
     });
 
@@ -39,11 +39,10 @@ module.exports.createPost = async function (req, res) {
       user: req.user.id,
     });
 
-    let postObj = await Post.findById(newPost._id)
-      .populate({
-        path: 'user',
-        select: '_id name email'
-      });
+    let postObj = await Post.findById(newPost._id).populate({
+      path: 'user',
+      select: '_id name email avatar',
+    });
 
     return res.status(200).json({
       message: 'post created successfully!',
@@ -81,4 +80,3 @@ module.exports.destroy = async function (req, res) {
     });
   }
 };
-
