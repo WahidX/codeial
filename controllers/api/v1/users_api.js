@@ -7,12 +7,14 @@ const { transporter } = require('../../../config/nodemailer');
 
 module.exports.updateUser = async function (req, res) {
   try {
-    let isMatch = await bcrypt.compare(req.body.password, req.user.password);
+    if (req.user.accountType === 'local') {
+      let isMatch = await bcrypt.compare(req.body.password, req.user.password);
 
-    if (!isMatch) {
-      return res.status(401).json({
-        message: 'Incorrect Password',
-      });
+      if (!isMatch) {
+        return res.status(401).json({
+          message: 'Incorrect Password',
+        });
+      }
     }
 
     if (!req.body.email || !req.body.name) {
@@ -22,9 +24,7 @@ module.exports.updateUser = async function (req, res) {
     }
 
     // Checking the email is available or not
-    let user = await User.findOne({ email: req.body.email }).select(
-      '_id name email avatar bio'
-    );
+    let user = await User.findOne({ email: req.body.email });
 
     if (user) {
       if (user.id !== req.user.id) {
@@ -34,9 +34,7 @@ module.exports.updateUser = async function (req, res) {
       }
     } else {
       // Actual owner which will be updated
-      user = await User.findById(req.user._id).select(
-        '_id name email avatar bio'
-      );
+      user = await User.findById(req.user._id);
     }
 
     // Checking the contact is available or not

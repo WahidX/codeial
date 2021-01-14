@@ -108,7 +108,6 @@ module.exports.createSession = async function (req, res) {
 module.exports.changePassword = async function (req, res) {
   try {
     if (
-      !req.body.oldPassword ||
       !req.body.newPassword ||
       !req.body.confirmPassword ||
       req.body.newPassword !== req.body.confirmPassword
@@ -119,13 +118,14 @@ module.exports.changePassword = async function (req, res) {
     }
 
     // check if the user is local or not
+    const salt = await bcrypt.genSalt(10);
+
     if (req.user.accountType === 'local') {
       let isMatch = await bcrypt.compare(
         req.body.oldPassword,
         req.user.password
       );
       if (isMatch) {
-        const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
         req.user.password = hashedPassword;
         req.user.save();
@@ -209,15 +209,9 @@ module.exports.resendConfirmationMail = async function (req, res) {
 
 module.exports.authGoogle = async function (req, res) {
   let user = await User.findOne({ email: req.body.email });
-  let tokenToSend;
-
-  console.log('req, NAME: ', user);
 
   if (user) {
     req.user = user;
-    tokenToSend = jwt.sign({ _id: user._id }, env.jwt_secret, {
-      expiresIn: '10000000',
-    });
   } else {
     user = await User.create({
       email: req.body.email,
@@ -243,7 +237,6 @@ module.exports.authGoogle = async function (req, res) {
         }
 
         const url = `${env.base_url}/api/${env.api_v}/auth/econfirmation/${token}`;
-        tokenToSend = token;
 
         transporter.sendMail({
           to: user.email,
@@ -259,6 +252,8 @@ module.exports.authGoogle = async function (req, res) {
   return res.status(200).json({
     message: 'Welcome!',
     user: user,
-    token: tokenToSend,
+    token: jwt.sign({ _id: user._id }, env.jwt_secret, {
+      expiresIn: '10000000',
+    }),
   });
 };
