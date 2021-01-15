@@ -14,10 +14,21 @@ module.exports.chatSocket = function (socketServer) {
       console.log('Online Status: ', status);
     });
 
+    socket.on('typing', typing);
+    socket.on('stopped-typing', stopTyping);
+
     socket.on('disconnect', () => {
       console.log('User had left!');
     });
   });
 
   return io;
+};
+
+let typing = () => {
+  console.log('Typing');
+};
+
+let stopTyping = () => {
+  console.log('Stopped Typing');
 };

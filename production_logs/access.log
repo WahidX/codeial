@@ -7,3 +7,17 @@
 [0mGET /api/v1/posts [36m304[0m 192.820 ms - -[0m
 [0mPOST /api/v1/auth/google [32m200[0m 78.128 ms - 592[0m
 [0mPOST /api/v1/auth/google [32m200[0m 57.288 ms - 592[0m
+[0mPOST /api/v1/posts/create [32m200[0m 290.832 ms - 631[0m
+[0mDELETE /api/v1/posts/60020380ed875039ea83169a [32m200[0m 216.730 ms - 54[0m
+[0mPOST /api/v1/auth/google [32m200[0m 59.149 ms - 592[0m
+[0mGET / [36m304[0m 192.882 ms - -[0m
+[0mGET /favicon.ico [0m-[0m - ms - -[0m
+[0mPOST /api/v1/users/profile [32m200[0m 53.545 ms - 404[0m
+[0mGET /api/v1/posts [36m304[0m 112.573 ms - -[0m
+[0mGET /api/v1/friends/ [36m304[0m 54.198 ms - -[0m
+[0mPOST /api/v1/users/profile [32m200[0m 109.178 ms - 404[0m
+[0mGET /api/v1/posts [36m304[0m 183.874 ms - -[0m
+[0mGET /api/v1/friends/ [36m304[0m 55.002 ms - -[0m
+[0mPOST /api/v1/users/profile [32m200[0m 101.348 ms - 404[0m
+[0mGET /api/v1/posts [36m304[0m 196.843 ms - -[0m
+[0mGET /api/v1/friends/ [36m304[0m 56.167 ms - -[0m
