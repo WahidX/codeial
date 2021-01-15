@@ -21,6 +21,15 @@ const customMware = require('./config/middleware');
 const passportGoogle = require('./config/passport-google-oauth2-strategy');
 const path = require('path');
 
+// Chat server init
+const ws_port = process.env.CODEIAL_CSERVER_PORT || 5000;
+const chatServer = require('http').Server(app);
+const chatSocket = require('./config/chat_socket').chatSocket(chatServer);
+// starting chat server
+chatServer.listen(ws_port);
+console.log(`Chat server listening to port ${ws_port}`);
+
+// asset_path setup
 if (env.name == 'development') {
   app.use(
     sassMiddleware({
@@ -93,13 +102,6 @@ app.use(customMware.setFlash);
 //     'Access-Control-Allow-Methods',
 //     'POST, GET, OPTIONS, DELETE, PATCH'
 //   );
-//   next();
-// });
-
-// app.use(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', '*');
-//   res.header('Access-Control-Allow-Methods', '*');
 //   next();
 // });
 

@@ -1,1 +1,9 @@
-[0mPOST /api/v1/search/?key=he&type=any [32m200[0m 289.399 ms - 476[0m
+[0mGET /api/v1/posts [36m304[0m 187.657 ms - -[0m
+[0mPOST /api/v1/users/profile [33m401[0m 4.550 ms - -[0m
+[0mPOST /api/v1/auth/google [32m200[0m 58.963 ms - 592[0m
+[0mPOST /api/v1/auth/google [32m200[0m 53.775 ms - 592[0m
+[0mPOST /api/v1/auth/google [32m200[0m 55.853 ms - 592[0m
+[0mPOST /api/v1/users/profile [33m401[0m 4.086 ms - -[0m
+[0mGET /api/v1/posts [36m304[0m 192.820 ms - -[0m
+[0mPOST /api/v1/auth/google [32m200[0m 78.128 ms - 592[0m
+[0mPOST /api/v1/auth/google [32m200[0m 57.288 ms - 592[0m
