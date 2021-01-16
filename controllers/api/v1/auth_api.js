@@ -88,7 +88,7 @@ module.exports.createSession = async function (req, res) {
 
     user.password = null;
 
-    return res.json(200, {
+    return res.status(200).json({
       message: "Sign in successful, here's your token",
       data: {
         user: user,

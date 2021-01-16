@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const chatSchema = new mongoose.Schema(
   {
+    roomid: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       enum: ['single', 'group'],

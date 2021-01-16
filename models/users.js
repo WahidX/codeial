@@ -53,6 +53,12 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    chats: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chat',
+      },
+    ],
   },
   {
     timestamps: true,
