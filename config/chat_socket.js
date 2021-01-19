@@ -1,6 +1,7 @@
 const Chat = require('../models/chat');
 const Online = require('../models/online');
 const User = require('../models/users');
+const verifySocket = require('./verifySocket');
 
 let socket;
 
@@ -13,9 +14,9 @@ module.exports.chatSocket = function (socketServer) {
     },
   });
 
+  io.use(verifySocket.verifySocket); // verifying JWT token
+
   io.on('connect', (socketConnection) => {
-    console.log('New connection!');
-    // init events
     socket = socketConnection;
     socket.on('init', ({ uid }) => {
       init(uid);
@@ -30,6 +31,7 @@ module.exports.chatSocket = function (socketServer) {
     socket.on('send-message', ({ msg }) => {
       sendMessage(msg);
     });
+
     socket.on('typing', typing);
     socket.on('stopped-typing', stopTyping);
   });
@@ -39,11 +41,9 @@ module.exports.chatSocket = function (socketServer) {
 
 let init = async (uid) => {
   try {
-    console.log("user's ID: ", uid);
     socket.broadcast.emit('online', uid);
 
     // finding existing sockets
-    // await Online.deleteOne({ user: uid });
     let onlineExisting = await Online.findOne({ user: uid });
     if (onlineExisting) {
       onlineExisting.remove();
