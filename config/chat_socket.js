@@ -28,8 +28,9 @@ module.exports.chatSocket = function (socketServer) {
     });
 
     // other events
-    socket.on('send-message', ({ msg }) => {
-      sendMessage(msg);
+    socket.on('send-message', ({ msg, uid }) => {
+      //room id needed
+      sendMessage(msg, uid);
     });
 
     socket.on('typing', typing);
@@ -95,8 +96,9 @@ let disconnectHandler = async () => {
   }
 };
 
-let sendMessage = (msg) => {
+let sendMessage = (msg, uid) => {
   console.log('MSGS: ', msg);
+  console.log('uid: ', uid);
 };
 
 let typing = () => {

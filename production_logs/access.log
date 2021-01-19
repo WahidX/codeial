@@ -151,3 +151,9 @@
 [0mGET /api/v1/posts [36m304[0m 133.258 ms - -[0m
 [0mPOST /api/v1/users/profile [32m200[0m 58.244 ms - 415[0m
 [0mGET /api/v1/friends/ [36m304[0m 53.236 ms - -[0m
+[0mPOST /api/v1/users/profile [32m200[0m 59.224 ms - 415[0m
+[0mGET /api/v1/posts [36m304[0m 131.489 ms - -[0m
+[0mGET /api/v1/friends/ [36m304[0m 53.330 ms - -[0m
+[0mPOST /api/v1/users/profile [32m200[0m 100.049 ms - 415[0m
+[0mGET /api/v1/posts [36m304[0m 196.855 ms - -[0m
+[0mGET /api/v1/friends/ [36m304[0m 50.588 ms - -[0m
