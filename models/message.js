@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema(
   {
+    status: {
+      type: String,
+      enum: ['sent', 'delivered', 'seen', 'error'],
+    },
     content: {
       type: String,
       required: true,

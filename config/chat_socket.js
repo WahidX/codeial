@@ -18,9 +18,8 @@ module.exports.chatSocket = function (socketServer) {
 
   io.on('connect', (socketConnection) => {
     socket = socketConnection;
-    socket.on('init', ({ uid }) => {
-      init(uid);
-    });
+    init(socket.handshake.query.uid);
+    // online initialization
 
     // disconnect events
     socket.on('disconnect', () => {
@@ -28,6 +27,11 @@ module.exports.chatSocket = function (socketServer) {
     });
 
     // other events
+
+    socket.on('enter-room', ({ uid, targetUid }) => {
+      enterRoom(uid, targetUid);
+    });
+
     socket.on('send-message', ({ msg, uid }) => {
       //room id needed
       sendMessage(msg, uid);
@@ -57,6 +61,7 @@ let init = async (uid) => {
       user: uid,
       socket: socket.id,
     });
+    // console.log('New_Connection =>', uid);
 
     // find user -> emit online status to chats
     let user = await User.findById(uid);
@@ -64,8 +69,12 @@ let init = async (uid) => {
       console.log('no user found');
       return;
     }
+
+    // user have to join all the ongoing chat rooms
     user.chats.map((chat) => {
-      socket.to(chat.roomid).emit('online', { uid });
+      socket.join(chat._id);
+      socket.to(chat.id).emit('online', { uid });
+      console.log(user.name, ' joined room: ', chat._id);
     });
   } catch (err) {
     console.log('ERR: ', err);
@@ -75,24 +84,29 @@ let init = async (uid) => {
 
 let disconnectHandler = async () => {
   // get the online instance
-  let onlineInstance = await Online.findOne({ socket: socket.id });
-  if (onlineInstance) {
-    console.log('User had left! ', onlineInstance.user);
+  try {
+    let onlineInstance = await Online.findOne({ socket: socket.id });
+    if (onlineInstance) {
+      console.log('User had left! ', onlineInstance.user);
 
-    // For now to everyone
-    socket.broadcast.emit('offline', onlineInstance.user);
+      // For now to everyone
+      socket.broadcast.emit('offline', onlineInstance.user);
 
-    // find user -> emit offline status to chats
-    let user = await User.findById(onlineInstance.user);
-    if (user === null) {
-      console.log('no user found');
-      return;
+      // find user -> emit offline status to chats
+      let user = await User.findById(onlineInstance.user);
+      if (user === null) {
+        console.log('no user found');
+        return;
+      }
+
+      user.chats.map((chat) => {
+        socket.to(chat).emit('offline', { uid: onlineInstance.user });
+      });
+
+      onlineInstance.remove();
     }
-    user.chats.map((chat) => {
-      socket.to(chat.roomid).emit('offline', { uid });
-    });
-
-    onlineInstance.remove();
+  } catch (err) {
+    console.log('Err: ', err);
   }
 };
 
@@ -109,25 +123,36 @@ let stopTyping = () => {
   console.log('Stopped Typing');
 };
 
-// let userId = socket.handshake.query.userId; // GET USER ID
+let enterRoom = async (uid, targetUid) => {
+  // create room if not there
+  try {
+    let user = await User.findById(uid).populate();
+    let target = await User.findById(targetUid);
+    if (!user || !target) {
+      console.log('user or target not found');
+      return;
+    }
+    // got the users
+    console.log('U: ', user.name, 'T: ', target.name);
 
-//   // CHECK IS USER EXHIST
-//   if (!users[userId]) users[userId] = [];
+    // checking if they're already in a room or not
+    let chat = await Chat.findOne({
+      $or: [{ users: [uid, targetUid] }, { users: [targetUid, uid] }],
+    });
 
-//   // PUSH SOCKET ID FOR PARTICULAR USER ID
-//   users[userId].push(socket.id);
-
-//   // USER IS ONLINE BROAD CAST TO ALL CONNECTED USERS
-//   io.sockets.emit("online", userId);
-
-//   // DISCONNECT EVENT
-//   socket.on('disconnect', (reason) => {
-
-//     // REMOVE FROM SOCKET USERS
-//     _.remove(users[userId], (u) => u === socket.id);
-//     if (users[userId].length === 0) {
-//       // ISER IS OFFLINE BROAD CAST TO ALL CONNECTED USERS
-//       io.sockets.emit("offline", userId);
-//       // REMOVE OBJECT
-//       delete users[userId];
-//     }
+    if (!chat) {
+      chat = await Chat.create({
+        users: [uid, targetUid],
+      });
+      user.chats.push(chat.id);
+      target.chats.push(chat.id);
+      user.save();
+      target.save();
+    }
+    socket.join(chat._id);
+    console.log(user.name, ' joined room: ', chat.id);
+  } catch (err) {
+    console.log('Socket Err: ', err);
+    return;
+  }
+};
