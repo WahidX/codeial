@@ -28,9 +28,16 @@ module.exports.chatSocket = function (socketServer) {
 
     // other events
 
-    socket.on('enter-room', ({ uid, targetUid }) => {
-      enterRoom(uid, targetUid);
+    socket.on('enter-room', async (uid, targetUid, cb) => {
+      let newChat = await enterRoom(uid, targetUid);
+      cb({
+        newChat,
+      });
     });
+
+    // socket.on('enter-room', ({ uid, targetUid }) => {
+    //   enterRoom(uid, targetUid);
+    // });
 
     socket.on('send-message', ({ msg, uid }) => {
       //room id needed
@@ -125,9 +132,13 @@ let stopTyping = () => {
 
 let enterRoom = async (uid, targetUid) => {
   // create room if not there
+  console.log(uid, targetUid);
   try {
-    let user = await User.findById(uid).populate();
-    let target = await User.findById(targetUid);
+    let user = await User.findById(uid).select('_id name email avatar chats');
+    let target = await User.findById(targetUid).select(
+      '_id name email avatar chats'
+    );
+
     if (!user || !target) {
       console.log('user or target not found');
       return;
@@ -138,21 +149,47 @@ let enterRoom = async (uid, targetUid) => {
     // checking if they're already in a room or not
     let chat = await Chat.findOne({
       $or: [{ users: [uid, targetUid] }, { users: [targetUid, uid] }],
+    }).populate({
+      path: 'users',
+      select: '_id name email avatar',
     });
+
+    console.log('chat:::', chat);
 
     if (!chat) {
       chat = await Chat.create({
         users: [uid, targetUid],
       });
-      user.chats.push(chat.id);
-      target.chats.push(chat.id);
-      user.save();
-      target.save();
+
+      chat = await chat
+        .populate({
+          path: 'users',
+          select: '_id name email avatar',
+        })
+        .execPopulate();
+
+      if (user.chats) {
+        user.chats.push(chat._id);
+      } else {
+        user.chats = [chat._id];
+      }
+      if (target.chats) {
+        target.chats.push(chat._id);
+      } else {
+        target.chats = [chat._id];
+      }
+
+      await user.save();
+      await target.save();
     }
+
+    console.log('after pushing: user::: ', user);
+
     socket.join(chat._id);
     console.log(user.name, ' joined room: ', chat.id);
+    return chat;
   } catch (err) {
     console.log('Socket Err: ', err);
-    return;
+    return null;
   }
 };

@@ -61,7 +61,9 @@ module.exports.createUser = async function (req, res) {
       message: 'User created Successfully',
       success: true,
       user: newUser,
-      token: tokenToSend,
+      token: jwt.sign({ _id: newUser._id }, env.jwt_secret, {
+        expiresIn: '10000000',
+      }),
     });
   } catch (err) {
     console.log('Err:  ', err);
