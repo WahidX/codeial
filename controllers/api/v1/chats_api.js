@@ -33,13 +33,13 @@ module.exports.getMessages = async function (req, res) {
       });
     }
 
-    let chat = Chat.findById(roomid).populate({
-      path: 'messages',
+    let messages = await Message.find({
+      room: req.params.roomid,
     });
 
     return res.status(200).json({
       message: 'Success',
-      messages: chat.messages,
+      messages,
     });
   } catch (err) {
     console.log('Err: ', err);

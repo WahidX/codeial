@@ -39,9 +39,8 @@ module.exports.chatSocket = function (socketServer) {
     //   enterRoom(uid, targetUid);
     // });
 
-    socket.on('send-message', ({ msg, uid }) => {
-      //room id needed
-      sendMessage(msg, uid);
+    socket.on('send-message', ({ msg, uid, roomID }) => {
+      sendMessage(msg, uid, roomID);
     });
 
     socket.on('typing', typing);
@@ -117,9 +116,10 @@ let disconnectHandler = async () => {
   }
 };
 
-let sendMessage = (msg, uid) => {
+let sendMessage = (msg, uid, roomID) => {
   console.log('MSGS: ', msg);
-  console.log('uid: ', uid);
+  console.log('from: ', uid);
+  console.log('to: ', roomID);
 };
 
 let typing = () => {
@@ -132,7 +132,6 @@ let stopTyping = () => {
 
 let enterRoom = async (uid, targetUid) => {
   // create room if not there
-  console.log(uid, targetUid);
   try {
     let user = await User.findById(uid).select('_id name email avatar chats');
     let target = await User.findById(targetUid).select(
@@ -153,8 +152,6 @@ let enterRoom = async (uid, targetUid) => {
       path: 'users',
       select: '_id name email avatar',
     });
-
-    console.log('chat:::', chat);
 
     if (!chat) {
       chat = await Chat.create({
@@ -182,8 +179,6 @@ let enterRoom = async (uid, targetUid) => {
       await user.save();
       await target.save();
     }
-
-    console.log('after pushing: user::: ', user);
 
     socket.join(chat._id);
     console.log(user.name, ' joined room: ', chat.id);
