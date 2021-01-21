@@ -1,6 +1,7 @@
 const Chat = require('../models/chat');
 const Online = require('../models/online');
 const User = require('../models/users');
+const Message = require('../models/message');
 const verifySocket = require('./verifySocket');
 
 let socket;
@@ -39,8 +40,11 @@ module.exports.chatSocket = function (socketServer) {
     //   enterRoom(uid, targetUid);
     // });
 
-    socket.on('send-message', ({ msg, uid, roomID }) => {
-      sendMessage(msg, uid, roomID);
+    socket.on('send-message', async (msg, uid, roomID, cb) => {
+      let status = sendMessage(msg, uid, roomID);
+      cb({
+        status,
+      });
     });
 
     socket.on('typing', typing);
@@ -116,10 +120,33 @@ let disconnectHandler = async () => {
   }
 };
 
-let sendMessage = (msg, uid, roomID) => {
+let sendMessage = async (msg, uid, roomID) => {
   console.log('MSGS: ', msg);
   console.log('from: ', uid);
   console.log('to: ', roomID);
+  // create msg object
+  // send to room
+  // return status
+  try {
+    let message = await Message.create({
+      content: msg,
+      from: uid,
+      room: roomID,
+    });
+
+    socket.to(roomID).emit('incoming-message', msg);
+
+    return true;
+    // socket.to(roomID).emit('incoming-message', (msg, (response) => {
+    // if delivered then
+    // message.status = 'delivered';
+    // message.save();
+    // return true;
+    //   )}
+  } catch (err) {
+    console.log('Err: ', err);
+    return false;
+  }
 };
 
 let typing = () => {
