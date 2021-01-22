@@ -83,7 +83,7 @@ let init = async (uid) => {
 
     // user have to join all the ongoing chat rooms
     user.chats.map((chat) => {
-      socket.join(chat._id);
+      socket.join(String(chat._id));
       socket.to(chat.id).emit('online', { uid });
       console.log(user.name, ' joined room: ', chat._id);
     });
@@ -128,6 +128,7 @@ let sendMessage = async (msg, uid, roomID) => {
   // create msg object
   // send to room
   // return status
+
   try {
     let message = await Message.create({
       content: msg,
@@ -135,7 +136,7 @@ let sendMessage = async (msg, uid, roomID) => {
       room: roomID,
     });
 
-    socket.to(roomID).emit('incoming-message', message);
+    io.to(String(roomID)).emit('incoming-msg', message);
 
     return true;
     // socket.to(roomID).emit('incoming-message', (msg, (response) => {
@@ -208,7 +209,7 @@ let enterRoom = async (uid, targetUid) => {
       await target.save();
     }
 
-    socket.join(chat._id);
+    socket.join(String(chat._id));
     console.log(user.name, ' joined room: ', chat.id);
     return chat;
   } catch (err) {
