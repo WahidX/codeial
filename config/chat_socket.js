@@ -5,9 +5,10 @@ const Message = require('../models/message');
 const verifySocket = require('./verifySocket');
 
 let socket;
+let io;
 
 module.exports.chatSocket = function (socketServer) {
-  const io = require('socket.io')(socketServer, {
+  io = require('socket.io')(socketServer, {
     cors: {
       origin: '*',
       headers: '*',
@@ -134,7 +135,7 @@ let sendMessage = async (msg, uid, roomID) => {
       room: roomID,
     });
 
-    socket.to(roomID).emit('incoming-message', msg);
+    socket.to(roomID).emit('incoming-message', message);
 
     return true;
     // socket.to(roomID).emit('incoming-message', (msg, (response) => {
